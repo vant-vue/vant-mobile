@@ -56,7 +56,7 @@ Vue.use(NavBar)
   .use(Overlay)
   .use(Switch)
 
-
+//
 //公共组件
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
