@@ -85,14 +85,14 @@ export default {
 		 let map = this.seachMap;
 		 todayList(map).then(res => {
 		   if(res.flag){//调用成功
-		 	  if(data.list&&data.list.length>0){
-				  for(let i=0;i<data.list.length;i++){
-					  this.list.push(data.list[i]);
+		 	  if(res.list&&res.list.length>0){
+				  for(let i=0;i<res.list.length;i++){
+					  this.list.push(res.list[i]);
 				  }
 				  // 加载状态结束
 				  this.loading = false;
 				  // 数据全部加载完成
-				  if (data.list.length < 10) {
+				  if (res.list.length < 10) {
 				    this.finished = true;
 				  }else{
 					  this.seachMap.pageNo++;

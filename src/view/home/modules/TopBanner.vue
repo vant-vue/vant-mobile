@@ -97,11 +97,11 @@ export default {
 	loadBusinessInfo(){
 		rankList().then(res => {
 		  if(res.flag){//调用成功
-			  this.businessInfo.headerImg = data.args.headerImg;
-			  this.businessInfo.storeName = data.args.storeName;
-			  this.businessInfo.qrcode = data.args.qrcode;
-			  this.businessInfo.phone = data.args.phone;
-			  this.businessInfo.qmgdCode = data.args.qmgdCode;
+			  this.businessInfo.headerImg = res.args.headerImg;
+			  this.businessInfo.storeName = res.args.storeName;
+			  this.businessInfo.qrcode = res.args.qrcode;
+			  this.businessInfo.phone = res.args.phone;
+			  this.businessInfo.qmgdCode = res.args.qmgdCode;
 		  }
 		}).catch(err=>{
 		  console.log(err);
