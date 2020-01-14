@@ -24,18 +24,19 @@ import ImgBanner from "./modules/ImgBanner";
 import GameFocus from "./modules/GameFocus";
 import GameList from "./modules/GameList";
 
-import { testGet, testPost } from "@/api/api";
+import { rankList, advList,getHotMatch} from "@/api/api";
 export default {
   name: "home",
   components: { TopBanner, Recommend, ImgBanner, GameFocus, GameList },
-
   data() {
-    return {};
+    return {
+		
+	};
   },
 
   methods: {
     // 请求示例
-    requestGetCase() {
+   /* requestGetCase() {
       let params = {
         a: "1111",
         b: "2222"
@@ -56,14 +57,13 @@ export default {
       }).catch(err=>{
         console.log(err);
       });
-    }
+    } */
   },
   mounted() {
-    this.requestGetCase();
-    this.requestPostCase();
+    //this.requestGetCase();
+    //this.requestPostCase();
   }
 };
 </script>
-
 <style lang="less" scoped>
 </style>

@@ -2,10 +2,10 @@
   <!-- 顶部滑动轮播 -->
   <div class="top_box">
     <van-row type="flex" align="center">
-      <van-col span="5" class="logo">
+      <van-col span="5" class="logo" v-show="businessInfo.hasBd">
         <img src="@/assets/home/logo.png" alt />
       </van-col>
-      <van-col span="8" class="title">
+      <van-col span="8" class="title"  v-show="businessInfo.hasBd">
         <div>大楚彩店</div>
         <img src="@/assets/home/wx.png" alt />
         <img src="@/assets/home/tel.png" alt />
@@ -91,14 +91,17 @@
   </div>
 </template>
 <script>
+import { rankList} from "@/api/api";
 export default {
-  name: "",
+  name: "TopBanner",
   components: {},
-
   data() {
     return {
       initialSwipe: 0, //初始位置索引
-      top_banner_list: [1, 2, 3, 4]
+      top_banner_list: [1, 2, 3],
+	  businessInfo:{
+		  hasBd:false
+	  }
     };
   },
 
