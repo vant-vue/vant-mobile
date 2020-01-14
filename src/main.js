@@ -30,6 +30,7 @@ import {
   Uploader,
   Overlay,
   Switch,
+  Sticky
 } from 'vant';
 Vue.use(NavBar)
   .use(Tabbar)
@@ -55,6 +56,7 @@ Vue.use(NavBar)
   .use(Uploader)
   .use(Overlay)
   .use(Switch)
+  .use(Sticky)
 
 //
 //公共组件

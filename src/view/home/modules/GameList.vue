@@ -1,19 +1,417 @@
 <template>
   <div class="tab_box">
-    <van-tabs v-model="active" swipeable @change="onTabChange">
-      <van-tab v-for="(item,index) in tabList" :key="index" :index="index">
-        <div slot="title">
-          <span :class="{'tab_cl':active==index}">{{item}}</span>
-        </div>
-        <!-- 列表 -->
-        <van-list
-          v-model="loading"
-          :offset="0"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="onLoad"
-        >
-          <div class="list_game_box" v-for="(v,k) in list" :key="k">
+    <van-sticky>
+      <van-tabs v-model="active"
+                swipeable
+                @change="onTabChange">
+        <van-tab v-for="(item,index) in tabList"
+                 :key="index"
+                 :index="index">
+          <div slot="title">
+            <span :class="{'tab_cl':active==index}">{{item}}</span>
+          </div>
+        </van-tab>
+      </van-tabs>
+    </van-sticky>
+    <!-- 列表 -->
+    <van-list v-model="loading"
+              :offset="0"
+              :finished="finished"
+              finished-text="没有更多了"
+              @load="onLoad">
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <div class="list_game_box">
+        <router-link :to="{path:'/recommend_detail',query:{}}">
+          <van-cell>
+            <van-row class="top"
+                     type="flex"
+                     align="center">
+              <van-col span="20">
+                <img src="@/assets/home/game.png"
+                     alt />
+                <span class="tit_one">超级大神</span>
+                <span class="tit_two">近10中8</span>
+                <span class="tit_two">3连红</span>
+              </van-col>
+              <van-col span="4"
+                       class="tr">
+                <div class="tit_three">100%</div>
+                <div class="tit_four">命中率</div>
+              </van-col>
+            </van-row>
+            <van-row class="mid"
+                     type="flex"
+                     align="center">
+              <van-col span="24">
+                <span class="tit_one">西甲</span>
+                <span class="tit_two">武汉高衙内今日澳超法乙2X1推荐推荐</span>
+              </van-col>
+            </van-row>
+            <van-row class="fot"
+                     type="flex"
+                     align="center">
+              <van-col span="12">
+                <span class="tit_one">
+                  <van-icon name="eye-o" />
+                  <span>12</span>
+                </span>
+                <span class="tit_two">
+                  <van-icon name="underway-o" />
+                  <span>16:02</span>
+                </span>
+              </van-col>
+              <van-col span="12"
+                       class="tr">
+                <span class="tit_three">不中退款</span>
+                <span class="tit_four">免费</span>
+              </van-col>
+            </van-row>
+          </van-cell>
+        </router-link>
+      </div>
+      <!-- <div class="list_game_box" v-for="(v,k) in list" :key="k">
             <router-link :to="{path:'/recommend_detail',query:{}}">
               <van-cell>
                 <van-row class="top" type="flex" align="center">
@@ -52,14 +450,12 @@
                 </van-row>
               </van-cell>
             </router-link>
-          </div>
-        </van-list>
-      </van-tab>
-    </van-tabs>
+          </div> -->
+    </van-list>
   </div>
 </template>
 <script>
-import { todayList} from "@/api/api";
+import { todayList } from "@/api/api";
 export default {
   name: "GameList",
   data() {
@@ -69,65 +465,66 @@ export default {
       list: [],
       loading: false,
       finished: false,
-	  seachMap:{
-		  pageNo:1,
-		  pageSize:10,
-		  recommendType:1,
-		  isTop:0,
-		  isAttention:0
-	  }
+      seachMap: {
+        pageNo: 1,
+        pageSize: 10,
+        recommendType: 1,
+        isTop: 0,
+        isAttention: 0
+      }
     };
   },
   methods: {
     onLoad() {
       // 异步更新数据
       setTimeout(() => {
-		 let map = this.seachMap;
-		 todayList(map).then(res => {
-		   if(res.flag){//调用成功
-		 	  if(res.list&&res.list.length>0){
-				  for(let i=0;i<res.list.length;i++){
-					  this.list.push(res.list[i]);
-				  }
-				  // 加载状态结束
-				  this.loading = false;
-				  // 数据全部加载完成
-				  if (res.list.length < 10) {
-				    this.finished = true;
-				  }else{
-					  this.seachMap.pageNo++;
-				  }
-			  }else{
-				  // 加载状态结束
-				  this.loading = false;
-				  this.finished = true;
-			  }
-			 
-		   }
-		 }).catch(err=>{
-		    // 加载状态结束
-		    this.loading = false;
-		     this.finished = true;
-		 });
+        let map = this.seachMap;
+        todayList(map)
+          .then(res => {
+            if (res.flag) {
+              //调用成功
+              if (res.list && res.list.length > 0) {
+                for (let i = 0; i < res.list.length; i++) {
+                  this.list.push(res.list[i]);
+                }
+                // 加载状态结束
+                this.loading = false;
+                // 数据全部加载完成
+                if (res.list.length < 10) {
+                  this.finished = true;
+                } else {
+                  this.seachMap.pageNo++;
+                }
+              } else {
+                // 加载状态结束
+                this.loading = false;
+                this.finished = true;
+              }
+            }
+          })
+          .catch(err => {
+            // 加载状态结束
+            this.loading = false;
+            this.finished = true;
+          });
       }, 500);
     },
     onTabChange(tab) {
-	  if(this.active==1){
-		  this.seachMap.recommendType = null;
-		  this.seachMap.isTop =1;
-		   this.seachMap.isAttention =0;
-	  }else if(this.active==0){
-	  		  this.seachMap.recommendType = null;
-	  		  this.seachMap.isAttention =1;
-			  this.seachMap.isTop =0;
-	  }else{
-		  this.seachMap.isAttention =0;
-		  this.seachMap.isTop =0;
-		  this.seachMap.recommendType = this.active;
-	  }
-	  this.loading = false;
-	  this.finished = false;
-	  this.onLoad();
+      if (this.active == 1) {
+        this.seachMap.recommendType = null;
+        this.seachMap.isTop = 1;
+        this.seachMap.isAttention = 0;
+      } else if (this.active == 0) {
+        this.seachMap.recommendType = null;
+        this.seachMap.isAttention = 1;
+        this.seachMap.isTop = 0;
+      } else {
+        this.seachMap.isAttention = 0;
+        this.seachMap.isTop = 0;
+        this.seachMap.recommendType = this.active;
+      }
+      this.loading = false;
+      this.finished = false;
     }
   }
 };
@@ -196,10 +593,10 @@ export default {
     .tit_three {
       font-size: 12px;
       color: #fff;
-      background: #FF9900;
-      padding:2px 10px;
+      background: #ff9900;
+      padding: 2px 10px;
       border-radius: 30px;
-      margin-right:10px; 
+      margin-right: 10px;
     }
     .tit_four {
       font-weight: bold;

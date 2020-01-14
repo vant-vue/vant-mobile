@@ -16,64 +16,70 @@
     <van-row gutter="20"
              class="content">
       <van-col span="12">
-        <div class="content_item">
-          <van-row class="content_item_top">
-            <van-col span="12">
-              西甲 周四001
-            </van-col>
-            <van-col span="12">
-              12-22 03:00
-            </van-col>
-          </van-row>
-          <van-row type="flex"
-                   align="center"
-                   class="content_item_cont tc">
-            <van-col span="8">
-              <img src="@/assets/home/game.png"
-                   alt="">
-              <div class="fo_b">巴塞</div>
-            </van-col>
-            <van-col span="8" class="fo_a">
-              VS
-            </van-col>
-            <van-col span="8">
-              <img src="@/assets/home/game.png"
-                   alt="">
-              <div class="fo_b">皇马</div>
-            </van-col>
-          </van-row>
-          <div class="tr">8位大神推荐</div>
-        </div>
+        <router-link :to="{path:'/focusGame',query:{}}">
+          <div class="content_item">
+            <van-row class="content_item_top">
+              <van-col span="12">
+                西甲 周四001
+              </van-col>
+              <van-col span="12">
+                12-22 03:00
+              </van-col>
+            </van-row>
+            <van-row type="flex"
+                     align="center"
+                     class="content_item_cont tc">
+              <van-col span="8">
+                <img src="@/assets/home/game.png"
+                     alt="">
+                <div class="fo_b">巴塞</div>
+              </van-col>
+              <van-col span="8"
+                       class="fo_a">
+                VS
+              </van-col>
+              <van-col span="8">
+                <img src="@/assets/home/game.png"
+                     alt="">
+                <div class="fo_b">皇马</div>
+              </van-col>
+            </van-row>
+            <div class="tr">8位大神推荐</div>
+          </div>
+        </router-link>
       </van-col>
       <van-col span="12">
-        <div class="content_item">
-          <van-row class="content_item_top">
-            <van-col span="12">
-              西甲 周四001
-            </van-col>
-            <van-col span="12">
-              12-22 03:00
-            </van-col>
-          </van-row>
-          <van-row type="flex"
-                   align="center"
-                   class="content_item_cont tc">
-            <van-col span="8">
-              <img src="@/assets/home/game.png"
-                   alt="">
-              <div class="fo_b">巴塞</div>
-            </van-col>
-            <van-col span="8" class="fo_a">
-              VS
-            </van-col>
-            <van-col span="8">
-              <img src="@/assets/home/game.png"
-                   alt="">
-              <div class="fo_b">皇马</div>
-            </van-col>
-          </van-row>
-          <div class="tr">8位大神推荐</div>
-        </div>
+        <router-link :to="{path:'/focusGame',query:{}}">
+          <div class="content_item">
+            <van-row class="content_item_top">
+              <van-col span="12">
+                西甲 周四001
+              </van-col>
+              <van-col span="12">
+                12-22 03:00
+              </van-col>
+            </van-row>
+            <van-row type="flex"
+                     align="center"
+                     class="content_item_cont tc">
+              <van-col span="8">
+                <img src="@/assets/home/game.png"
+                     alt="">
+                <div class="fo_b">巴塞</div>
+              </van-col>
+              <van-col span="8"
+                       class="fo_a">
+                VS
+              </van-col>
+              <van-col span="8">
+                <img src="@/assets/home/game.png"
+                     alt="">
+                <div class="fo_b">皇马</div>
+              </van-col>
+            </van-row>
+            <div class="tr">8位大神推荐</div>
+          </div>
+        </router-link>
       </van-col>
     </van-row>
   </div>
@@ -126,11 +132,11 @@ export default {
           height: 38px;
           border-radius: 50%;
         }
-        .fo_a{
+        .fo_a {
           font-size: 16px;
           font-weight: bold;
         }
-        .fo_b{
+        .fo_b {
           font-weight: bold;
         }
       }

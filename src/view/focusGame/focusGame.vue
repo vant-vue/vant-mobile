@@ -4,6 +4,7 @@
     <div class="main_box">
       <div class="tab_box">
         <!-- 标题 -->
+        <div class="t_box">
         <div class="title_box">焦点赛事</div>
         <!-- 轮播 -->
         <div class="banner_box">
@@ -32,15 +33,16 @@
                 </van-row>
               </van-cell>
             </van-swipe-item>
-            <div class="custom_indicator" slot="indicator">
+            <!-- <div class="custom_indicator" slot="indicator">
               <span
                 :class="{'current':current==index}"
                 :key="item.key"
                 :index="index"
                 v-for="(item,index) in banner_list"
               ></span>
-            </div>
+            </div> -->
           </van-swipe>
+        </div>
         </div>
         <!-- 列表 -->
          <van-row class="list_box" type="flex" align="center">
@@ -145,7 +147,8 @@ export default {
   data() {
     return {
       initialSwipe: 0, //初始位置索引
-      banner_list: [1, 1, 1, 1],
+      // banner_list: [1, 1, 1, 1],
+      banner_list: [1],
       current: 0,
       list: [],
       loading: false,
@@ -176,6 +179,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.t_box{
+   background: #ffcc00;
+}
 .title_box {
   font-size: 18px;
   color: #000;
@@ -185,7 +191,7 @@ export default {
 }
 .banner_box {
   box-sizing: border-box;
-  padding: 0 10px 10px;
+  padding: 10px 10px 10px;
   background: #ffcc00;
   .custom_indicator {
     text-align: center;

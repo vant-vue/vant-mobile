@@ -1,17 +1,18 @@
 <template>
   <div>
     <!-- <Header></Header> -->
-    <div class="main_box">
+    <div class="main_box"
+         ref="box">
       <!-- 顶部滑动轮播 -->
       <top-banner></top-banner>
       <!-- 推荐专区 -->
-      <recommend></recommend>
+      <recommend @scrollTop="isScrollTop"></recommend>
       <!-- 图片轮播 -->
       <img-banner></img-banner>
       <!-- 赛事焦点 -->
       <game-focus></game-focus>
       <!-- 赛事列表 -->
-      <game-list></game-list>
+      <game-list id="recommendId"></game-list>
     </div>
     <Footer></Footer>
   </div>
@@ -28,14 +29,17 @@ export default {
   name: "home",
   components: { TopBanner, Recommend, ImgBanner, GameFocus, GameList },
   data() {
-    return {
-		
-	};
+    return {};
   },
 
   methods: {
+    isScrollTop() {
+      document
+        .getElementById("recommendId")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
+    }
     // 请求示例
-   /* requestGetCase() {
+    /* requestGetCase() {
       let params = {
         a: "1111",
         b: "2222"

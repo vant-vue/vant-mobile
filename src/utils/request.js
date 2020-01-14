@@ -66,7 +66,7 @@ service.interceptors.request.use(config => {
       ...config.params
     }
   }
-  console.log(config);
+  // console.log(config);
   return config
 }, (error) => {
   return Promise.reject(error)

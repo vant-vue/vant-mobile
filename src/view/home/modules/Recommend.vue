@@ -1,28 +1,38 @@
 <template>
   <!-- 推荐 -->
   <div class="recommend_box">
-    <van-row type="flex" align="center">
-      <van-col span="6" class="item tc">
-        <router-link :to="{path: '/recommend', query:{}}">
-          <img src="@/assets/home/logo.png" alt />
-          <div>今日推荐</div>
-        </router-link>
+    <van-row type="flex"
+             align="center">
+      <van-col span="6"
+               class="item tc"
+               @click="isScroll">
+        <!-- <router-link :to="{path: '/recommend', query:{}}"> -->
+        <img src="@/assets/home/logo.png"
+             alt />
+        <div>今日推荐</div>
+        <!-- </router-link> -->
       </van-col>
-      <van-col span="6" class="item tc">
+      <van-col span="6"
+               class="item tc">
         <router-link :to="{path: '/optimization', query:{}}">
-          <img src="@/assets/home/logo.png" alt />
+          <img src="@/assets/home/logo.png"
+               alt />
           <div>2.0优选</div>
         </router-link>
       </van-col>
-      <van-col span="6" class="item tc">
+      <van-col span="6"
+               class="item tc">
         <router-link :to="{path: '/free', query:{}}">
-          <img src="@/assets/home/logo.png" alt />
+          <img src="@/assets/home/logo.png"
+               alt />
           <div>免费专区</div>
         </router-link>
       </van-col>
-      <van-col span="6" class="item tc">
+      <van-col span="6"
+               class="item tc">
         <router-link :to="{path: '/focusGame', query:{}}">
-          <img src="@/assets/home/logo.png" alt />
+          <img src="@/assets/home/logo.png"
+               alt />
           <div>彩友工具</div>
         </router-link>
       </van-col>
@@ -38,7 +48,11 @@ export default {
     return {};
   },
 
-  methods: {}
+  methods: {
+    isScroll() {
+      this.$emit("scrollTop", { a: 1 });
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
