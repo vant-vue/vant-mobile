@@ -13,7 +13,7 @@
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <div class="list_game_box" v-for="(v,k) in list">
+          <div class="list_game_box" v-for="(v,k) in list" :key="k">
             <router-link :to="{path:'/recommend_detail',query:{}}">
               <van-cell>
                 <van-row class="top" type="flex" align="center">
