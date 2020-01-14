@@ -32,7 +32,7 @@
         v-for="(item,index) in top_banner_list"
       >
         <div class="item">
-          <router-link :to="{path:'ranking',query:{}}">
+          <router-link :to="{path:'ranking',query:{'idx':index}}">
             <van-row type="flex" align="center">
               <van-col span="4">
                 <div class="t_txt tc">{{index==0?'最高命中榜':index==1?'最高收益榜':'连红小生榜'}}</div>
@@ -53,7 +53,6 @@
         <div class="more" v-show="index == top_banner_list.length-1" @click="more">
           <img src="@/assets/home/wx.png" alt />
           <div class="mo_t">查看更多</div>
-		  
         </div>
       </van-swipe-item>
     </van-swipe>
@@ -73,12 +72,13 @@ export default {
 	  }
     };
   },
-
   methods: {
     onChange(index) {
       console.log(index);
     },
-    more() {},
+    more() {
+		 this.$router.push({path:'/ranking'});
+	},
 	loadRank(){
 		let map = {
 			"pageSize":5,
