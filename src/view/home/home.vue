@@ -24,7 +24,6 @@ import ImgBanner from "./modules/ImgBanner";
 import GameFocus from "./modules/GameFocus";
 import GameList from "./modules/GameList";
 
-import { rankList, advList,getHotMatch} from "@/api/api";
 export default {
   name: "home",
   components: { TopBanner, Recommend, ImgBanner, GameFocus, GameList },
