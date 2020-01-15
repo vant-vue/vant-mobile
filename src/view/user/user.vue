@@ -40,9 +40,8 @@
               center
               icon="volume-o"
               value-class="val_cla"
-            >
-				{{usinfo.cashAmount}}
-			</van-cell>
+			  :value="usinfo.cashAmount?usinfo.cashAmount:'0.00'"
+            />
           </router-link>
           <router-link :to="{path:'/focus',query:{}}">
             <van-cell title="我的关注" is-link center value icon="volume-o" value-class="val_cla" />
@@ -50,9 +49,7 @@
         </div>
         <div class="fot_box">
 			<router-link :to="{path:'/switch_store',query:{}}" v-if="usinfo.storeName">
-			  <van-cell title="绑定店铺" is-link center icon="volume-o" value-class>
-				 {{usinfo.storeName}}
-			  </van-cell>
+			  <van-cell title="绑定店铺" is-link center icon="volume-o" :value="usinfo.storeName" value-class />
 			</router-link>
           <div v-if="true">
             <div class="btn">
