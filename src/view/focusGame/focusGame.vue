@@ -179,7 +179,6 @@ export default {
 					this.searchMap.mid = list[0].mId;
 				}
 				this.banner_list = list[0].mId;;
-				this.onLoad();
 			}
           }
         })

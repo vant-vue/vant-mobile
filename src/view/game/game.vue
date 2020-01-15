@@ -91,6 +91,9 @@
     <Footer></Footer>
     <van-calendar v-model="show"
                   :show-confirm="false"
+				  :min-date="minDate"
+				    :max-date="maxDate"
+					:default-date="defualtDate"
                   @confirm="onConfirm" />
     <!-- 刷选弹窗 -->
     <van-overlay :show="show_overlay"
@@ -155,6 +158,8 @@
 </template>
 
 <script>
+import { getNextDayDate } from '@/utils/util';
+
 export default {
   name: "game",
   components: {},
@@ -162,7 +167,10 @@ export default {
     return {
       show: false,
       show_overlay: false,
-      date: this.formatDate(new Date())
+      date: this.formatDate(new Date()),
+	  minDate:getNextDayDate(-180,new Date()),
+	  maxDate:getNextDayDate(1,new Date()),
+	  defualtDate:new Date()
     };
   },
 

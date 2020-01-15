@@ -98,7 +98,7 @@ export function formatDate(value, fmt) {
 }
 
 // 生成首页路由
-export function generateIndexRouter(data) {
+/* export function generateIndexRouter(data) {
   let indexRouter = [{
     path: '/',
     name: 'dashboard',
@@ -113,7 +113,7 @@ export function generateIndexRouter(data) {
     "path": "*", "redirect": "/404", "hidden": true
   }]
   return indexRouter;
-}
+} */
 
 // 生成嵌套路由（子路由）
 
@@ -252,4 +252,16 @@ export function showDealBtn(bpmStatus) {
     return true;
   }
   return false;
+}
+
+/**
+ * 得到下几天时间
+ * @param dd
+ * @returns {String}
+ */
+export function getNextDayDate(AddDayCount,dd){
+    var date = new Date(dd);
+    date =+date + 1000*60*60*24*(AddDayCount);
+    date = new Date(date);
+	return date;
 }

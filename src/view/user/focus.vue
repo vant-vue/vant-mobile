@@ -18,77 +18,29 @@
                       :finished="finished"
                       finished-text="没有更多了"
                       @load="onLoad">
-              <div v-if="active == 0">
-                <div class="list_box">
+                <div class="list_box" v-for="(v,k) in list" :key="k">
                   <router-link :to="{path:'/recommend_detail',query:{}}">
                     <van-cell>
                       <van-row class="top"
                                type="flex"
                                align="center">
                         <van-col span="3">
-                          <img src="@/assets/home/game.png"
+                          <img :src="active?'@/assets/home/game.png':v.imgUrl"
                                alt />
 
                         </van-col>
                         <van-col span="9">
-                          <span class="tit_one">超级大神</span>
+                          <span class="tit_one">{{v.nickName}}</span>
                         </van-col>
                         <van-col span="12"
                                  class="tr">
-                          <span class="tit_two">已关注</span>
+                          <!-- <span class="tit_two" @click="removeAtention(k)">已关注</span> -->
                         </van-col>
                       </van-row>
 
                     </van-cell>
                   </router-link>
                 </div>
-                <div class="list_box">
-                  <router-link :to="{path:'/recommend_detail',query:{}}">
-                    <van-cell>
-                      <van-row class="top"
-                               type="flex"
-                               align="center">
-                        <van-col span="3">
-                          <img src="@/assets/home/game.png"
-                               alt />
-
-                        </van-col>
-                        <van-col span="9">
-                          <span class="tit_one">超级大神</span>
-                        </van-col>
-                        <van-col span="12"
-                                 class="tr">
-                          <span class="tit_two">已关注</span>
-                        </van-col>
-                      </van-row>
-                    </van-cell>
-                  </router-link>
-                </div>
-              </div>
-              <div v-else-if="active == 1">
-                <div class="list_box">
-                  <router-link :to="{path:'/recommend_detail',query:{}}">
-                    <van-cell>
-                      <van-row class="top"
-                               type="flex"
-                               align="center">
-                        <van-col span="3">
-                          <img src="@/assets/home/game.png"
-                               alt />
-
-                        </van-col>
-                        <van-col span="9">
-                          <span class="tit_one">龙眼1号</span>
-                        </van-col>
-                        <van-col span="12"
-                                 class="tr">
-                          <span class="tit_two">已关注</span>
-                        </van-col>
-                      </van-row>
-                    </van-cell>
-                  </router-link>
-                </div>
-              </div>
             </van-list>
           </van-tab>
         </van-tabs>
@@ -97,6 +49,7 @@
   </div>
 </template>
 <script>
+import {attentionExpert} from "@/api/api";
 export default {
   name: "focus",
   data() {
@@ -105,30 +58,66 @@ export default {
       tabList: ["关注的大神", "关注的优选"],
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+	  searchMap:{
+		  pageNo:1,
+		  type:1
+	  }
     };
   },
   methods: {
     onLoad() {
-      console.log("11111");
       // 异步更新数据
       setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        this.finished = true;
-        // 数据全部加载完成
-        if (this.list.length >= 100) {
-          this.finished = true;
-        }
-      }, 2000);
+        let map = this.seachMap;
+         attentionExpert(map)
+           .then(res => {
+             if (res.flag) {
+               //调用成功
+               if (res.list && res.list.length > 0) {
+                 for (let i = 0; i < res.list.length; i++) {
+                   this.list.push(res.list[i]);
+                 }
+                 // 加载状态结束
+                 this.loading = false;
+                 // 数据全部加载完成
+                 if (res.list.length < 10) {
+                   this.finished = true;
+                 } else {
+                   this.pageNo++;
+                 }
+               } else {
+                 // 加载状态结束
+                 this.loading = false;
+                 this.finished = true;
+               }
+             }
+           })
+           .catch(err => {
+             // 加载状态结束
+             this.loading = false;
+             this.finished = true;
+           });
+      }, 500);
     },
     onTabChange(tab) {
+	  this.searchMap.type = this.active + 1;
+	  this.searchMap.pageNo = 1;
       this.list = [];
       this.onLoad();
-    }
+    },removeAtention(k){
+		let att = this.list[k];
+		removeAttention({"id":att.id})
+           .then(res => {
+             if (res.flag) {
+               //调用成功
+               this.list.splice(k,1); 
+             }
+           })
+           .catch(err => {
+             // 加载状态结束
+           });
+	}
   }
 };
 </script>
