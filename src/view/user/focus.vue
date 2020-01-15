@@ -18,7 +18,7 @@
                       :finished="finished"
                       finished-text="没有更多了"
                       @load="onLoad">
-                <div class="list_box" v-for="(v,k) in list">
+                <div class="list_box" v-for="(v,k) in list" :key="k">
                   <router-link :to="{path:'/recommend_detail',query:{}}">
                     <van-cell>
                       <van-row class="top"
@@ -34,7 +34,7 @@
                         </van-col>
                         <van-col span="12"
                                  class="tr">
-                          <span class="tit_two" @click="removeAtention(k)">已关注</span>
+                          <!-- <span class="tit_two" @click="removeAtention(k)">已关注</span> -->
                         </van-col>
                       </van-row>
 
