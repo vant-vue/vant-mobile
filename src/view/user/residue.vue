@@ -23,7 +23,7 @@
 			          :finished="finished"
 			          finished-text="没有更多了"
 			          @load="onLoad">
-			  <van-cell v-for="(v,k) in list">
+			  <van-cell v-for="(v,k) in list"  :key="k">
 				<van-row class="list"
 						 type="flex"
 						 align="center">
