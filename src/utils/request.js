@@ -15,7 +15,7 @@ const service = axios.create({
 
 const err = (error) => {
   if (error.response) {
-    let data = error.response.data
+    let data = error.response.data;
     const token = Vue.ls.get(ACCESS_TOKEN)
     console.log("------异常响应------", token)
     console.log("------异常响应------", error.response.status)
