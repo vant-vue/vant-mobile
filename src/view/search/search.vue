@@ -101,6 +101,7 @@
   </div>
 </template>
 <script>
+	import { todayList } from "@/api/api";
 export default {
   name: "search",
   data() {
@@ -114,7 +115,6 @@ export default {
   methods: {
     onSearch(){},
     onLoad() {
-      console.log("11111");
       // 异步更新数据
       setTimeout(() => {
         for (let i = 0; i < 10; i++) {

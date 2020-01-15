@@ -33,7 +33,7 @@ export default {
     },
     more() {},
 	loadAdv(){
-		rankList().then(res => {
+		advList().then(res => {
 		  if(res.flag){//调用成功
 		   if(res.list){
 			   this.banner_list = res.list;

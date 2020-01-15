@@ -1,5 +1,5 @@
 <template>
-  <div class="focus_box">
+  <div class="focus_box" v-show="matchMap&&matchMap.length>0">
     <van-row class="title"
              type="flex"
              align="center">
@@ -8,76 +8,42 @@
       </van-col>
       <van-col span="12"
                class="tr">
-
         <span class="title_right">
-          <van-icon name="replay" />换一换</span>
+          <van-icon name="replay" @change="changeMatch"/>换一换</span>
       </van-col>
     </van-row>
     <van-row gutter="20"
              class="content">
-      <van-col span="12">
-        <router-link :to="{path:'/focusGame',query:{}}">
+      <van-col span="12" v-for="(v,k) in matchMap[active]">
+        <router-link :to="{path:'/focusGame',query:{'mid':v.mId}}">
           <div class="content_item">
             <van-row class="content_item_top">
               <van-col span="12">
-                西甲 周四001
+                {{v.matchJson.lAbbr}} {{v.matchJson.num}}
               </van-col>
               <van-col span="12">
-                12-22 03:00
+                {{v.matchJson.endTime.substring(5,16)}}
               </van-col>
             </van-row>
             <van-row type="flex"
                      align="center"
                      class="content_item_cont tc">
               <van-col span="8">
-                <img src="@/assets/home/game.png"
+                <img :src="v.matchJson.hImg" :onerror="this.src='/pt/img/logo-h.png'"
                      alt="">
-                <div class="fo_b">巴塞</div>
+                <div class="fo_b">{{v.matchJson.hAbbr}}</div>
               </van-col>
               <van-col span="8"
                        class="fo_a">
                 VS
               </van-col>
               <van-col span="8">
-                <img src="@/assets/home/game.png"
+                <img :src="v.matchJson.aImg" :onerror="this.src='/pt/img/logo-a.png'"
                      alt="">
-                <div class="fo_b">皇马</div>
+                <div class="fo_b">{{v.matchJson.aAbbr}}</div>
               </van-col>
             </van-row>
-            <div class="tr">8位大神推荐</div>
-          </div>
-        </router-link>
-      </van-col>
-      <van-col span="12">
-        <router-link :to="{path:'/focusGame',query:{}}">
-          <div class="content_item">
-            <van-row class="content_item_top">
-              <van-col span="12">
-                西甲 周四001
-              </van-col>
-              <van-col span="12">
-                12-22 03:00
-              </van-col>
-            </van-row>
-            <van-row type="flex"
-                     align="center"
-                     class="content_item_cont tc">
-              <van-col span="8">
-                <img src="@/assets/home/game.png"
-                     alt="">
-                <div class="fo_b">巴塞</div>
-              </van-col>
-              <van-col span="8"
-                       class="fo_a">
-                VS
-              </van-col>
-              <van-col span="8">
-                <img src="@/assets/home/game.png"
-                     alt="">
-                <div class="fo_b">皇马</div>
-              </van-col>
-            </van-row>
-            <div class="tr">8位大神推荐</div>
+            <div class="tr">{{v.hasRecCount}}位大神推荐</div>
           </div>
         </router-link>
       </van-col>
@@ -86,15 +52,51 @@
 
 </template>
 <script>
+import {getHotMatch} from "@/api/api";
 export default {
-  name: "",
+  name: "GameFocus",
   components: {},
-
   data() {
-    return {};
+    return {
+		active:0,
+		matchMap:[]
+	};
   },
-
-  methods: {}
+  methods: {
+	  loadMatch(){
+		  getHotMatch().then(res => {
+          if (res.flag) {
+            //调用成功
+            var list = res.list;
+			if(list){
+				var temp;
+				for(let a=0;a<list.length;a++){
+					if(a%2==0){
+						temp = a/2;
+						this.matchMap[temp] = [];
+					}
+					let hot = list[a];
+					hot.matchJson = eval('(' +hot.matchContent+')');
+					hot.hImg = '/static/teamlogo/png/'+hot.hId+'.png';
+					hot.aImg = '/static/teamlogo/png/'+hot.aId+'.png';
+					this.matchMap[temp].push(hot);
+				}
+			}
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+	  },
+	  changeMatch(){
+		  let len = this.matchMap.length;
+		  if(len == this.active){
+			  this.active = 0;
+		  }else{
+			  this.active++;
+		  }
+	  }
+  }
 };
 </script>
 <style lang="less" scoped>

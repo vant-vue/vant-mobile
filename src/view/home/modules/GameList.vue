@@ -521,7 +521,7 @@ export default {
       } else {
         this.seachMap.isAttention = 0;
         this.seachMap.isTop = 0;
-        this.seachMap.recommendType = this.active;
+        this.seachMap.recommendType = this.active-1;
       }
       this.loading = false;
       this.finished = false;

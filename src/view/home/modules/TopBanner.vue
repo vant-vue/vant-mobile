@@ -99,7 +99,7 @@
   </div>
 </template>
 <script>
-import { rankList, getBusinessInfo } from "@/api/api";
+import {rankList, getBusinessInfo} from "@/api/api";
 export default {
   name: "TopBanner",
   components: {},
@@ -116,7 +116,7 @@ export default {
         [{ nick_name: "大神1" }, { nick_name: "大神2" }]
       ],
       businessInfo: {
-        hasBd: true
+        hasBd: false
       }
     };
   },
@@ -146,7 +146,7 @@ export default {
         });
     },
     loadBusinessInfo() {
-      rankList()
+      getBusinessInfo()
         .then(res => {
           if (res.flag) {
             //调用成功
