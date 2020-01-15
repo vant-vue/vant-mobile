@@ -14,7 +14,7 @@
     </van-row>
     <van-row gutter="20"
              class="content">
-      <van-col span="12" v-for="(v,k) in matchMap[active]">
+      <van-col span="12" v-for="(v,k) in matchMap[active]" :key="k">
         <router-link :to="{path:'/focusGame',query:{'mid':v.mId}}">
           <div class="content_item">
             <van-row class="content_item_top">

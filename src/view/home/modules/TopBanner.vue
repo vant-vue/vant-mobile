@@ -33,7 +33,7 @@
     <van-swipe class="handle_banner"
                @change="onChange"
                :loop="false"
-               :width="330"
+               :width="screenWidth"
                :initial-swipe="initialSwipe"
                :show-indicators="false">
       <van-swipe-item class="b_item"
@@ -105,6 +105,7 @@ export default {
   components: {},
   data() {
     return {
+      screenWidth:document.body.clientWidth*0.8,
       show_overlay: false,
       initialSwipe: 0, //初始位置索引
       top_banner_list: [
@@ -161,6 +162,8 @@ export default {
           console.log(err);
         });
     }
+  },
+  mounted(){
   }
 };
 </script>
