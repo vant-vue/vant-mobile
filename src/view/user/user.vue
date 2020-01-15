@@ -8,24 +8,23 @@
             <van-cell>
               <van-row class="top" type="flex" align="center">
                 <van-col>
-                  <router-link :to="{path:'/switch_store',query:{}}">
-                    <img src="@/assets/home/game.png" alt />
-                  </router-link>
+                    <img :src="usinfo.headerImg" alt />
                 </van-col>
                 <van-col span="24">
                   <div>
-                    <span class="tit_one">超级大神</span>
+                    <span class="tit_one">{{usinfo.nickName}}</span>
                   </div>
-
                   <div>
-                    <span v-if="false" class="tit_one">15007142244</span>
-                    <span v-else class="tit_two">手机号未绑定</span>
+                    <span v-if="usinfo.phone" class="tit_one">{{usinfo.phone}}</span>
+					<router-link :to="{path:'/bind_tel',query:{}}">
+						<span v-if="!usinfo.phone" class="tit_two">手机号未绑定</span>
+					</router-link>
                   </div>
                 </van-col>
               </van-row>
             </van-cell>
           </div>
-          <div class="right_bg">
+          <div class="right_bg" v-if="usinfo.isExpert">
             <img src="@/assets/home/game.png" alt />
             <span>认证专家</span>
           </div>
@@ -39,20 +38,23 @@
               title="我的余额"
               is-link
               center
-              value="100.52"
               icon="volume-o"
               value-class="val_cla"
-            />
+            >
+				{{usinfo.cashAmount}}
+			</van-cell>
           </router-link>
           <router-link :to="{path:'/focus',query:{}}">
             <van-cell title="我的关注" is-link center value icon="volume-o" value-class="val_cla" />
           </router-link>
         </div>
         <div class="fot_box">
+			<router-link :to="{path:'/switch_store',query:{}}" v-if="usinfo.storeName">
+			  <van-cell title="绑定店铺" is-link center icon="volume-o" value-class>
+				 {{usinfo.storeName}}
+			  </van-cell>
+			</router-link>
           <div v-if="true">
-            <router-link :to="{path:'/bind_tel',query:{}}">
-              <van-cell title="绑定店铺" is-link center value="大楚彩店" icon="volume-o" value-class />
-            </router-link>
             <div class="btn">
               <router-link :to="{path:'/recruit',query:{}}">
                 <van-button type="primary" color="#FF6600" size="large">大神招募中...</van-button>
@@ -84,15 +86,38 @@
 </template>
 
 <script>
+import {userInfo} from "@/api/api";
 export default {
   name: "user",
   components: {},
-
   data() {
-    return {};
+    return {
+		usinfo:{}
+	};
   },
-
-  methods: {}
+  methods: {
+	 loadUserInfo(){
+		 userInfo().then(res => {
+		   if (res.flag) {
+		     //调用成功
+		     this.usinfo.nickName = res.args.nickName;
+			 this.usinfo.headerImg = res.args.headerImg;
+			 this.usinfo.phone = res.args.phone;
+			 if(this.usinfo.phone){
+				 this.usinfo.phone  = this.usinfo.phone.substring(0,3)+"****"+this.usinfo.phone.substring(7,11);
+			 }
+			 this.usinfo.cashAmount = res.args.cashAmount;
+			 this.usinfo.isExpert = res.args.isExpert;
+			 this.usinfo.storeName = res.args.storeName;
+		   }
+		 })
+		 .catch(err => {
+		   console.log(err);
+		 });
+	 } 
+  },mounted() {
+	 this.loadUserInfo();
+  }
 };
 </script>
 
