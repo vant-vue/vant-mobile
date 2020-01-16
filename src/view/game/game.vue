@@ -16,7 +16,7 @@
                      align="center">
               <van-col span="19">
                 <van-button class="btn"
-                            @click="show = true"
+							@click="show = true"
                             icon="calender-o"
                             size="small"
                             plain
@@ -24,10 +24,10 @@
                             color="#323232"
                             block>
                   <van-icon class="left"
-                            name="arrow-left" />
-                  <span>{{date}}</span>
+                            name="arrow-left" @click.stop="pOrN('prev')"/>
+                  <span >{{date}}</span>
                   <van-icon class="right"
-                            name="arrow" />
+                            name="arrow"  @click.stop="pOrN('next')"/>
                 </van-button>
               </van-col>
               <van-col span="5"
@@ -132,8 +132,7 @@
 </template>
 <script>
 import { getMatch } from "@/api/api";
-import { getNextDayDate } from "@/utils/dateUtils";
-import { cloneObject } from "@/utils/util";
+import { getNextDayDate,cloneObject ,parseDate,stringToDate} from "@/utils/util";
 export default {
   name: "game",
   components: {},
@@ -156,7 +155,10 @@ export default {
       serachMap: {
         sport: "football"
       },
-      dateMap: {},
+      dateMap: {
+		  next:"2020-01-17",
+		  prev:"2020-01-15"
+	  },
       lNameMap: {},
       showlNameMap: {}
     };
@@ -254,18 +256,25 @@ export default {
     },
     removeLname() {
       this.show_overlay = false;
-      this.lNameMap = this.cloneObject(this.showlNameMap);
+      this.lNameMap = cloneObject(this.showlNameMap);
     },
     showLname() {
       this.show_overlay = true;
-      this.showlNameMap = this.cloneObject(this.lNameMap);
+      this.showlNameMap =cloneObject(this.lNameMap);
     },
     sureLname() {
       this.show_overlay = false;
-    },
-    cloneObject(obj) {
-      return JSON.parse(JSON.stringify(obj));
-    }
+    },pOrN(p){
+		if(p=='next'&&this.date.indexOf(stringToDate(this.maxDate,"yyyy-MM-dd"))!=-1){
+			return;
+		}
+		if(p=='prev'&&this.date.indexOf(stringToDate(this.minDate,"yyyy-MM-dd"))!=-1){
+			return;
+		}
+		this.serachMap.date = this.dateMap[p];
+		this.date = this.formatDate(parseDate(this.serachMap.date));
+		this.loadMatch();
+	}
   }
 };
 </script>

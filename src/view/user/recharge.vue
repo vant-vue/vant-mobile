@@ -9,24 +9,8 @@
           <van-row gutter="20"
                    class="tc">
             <van-col class="v_col"
-                     span="8">
-              <div>100.00</div>
-            </van-col>
-            <van-col class="v_col"
-                     span="8">
-              <div class="checked">200.00</div>
-            </van-col>
-            <van-col class="v_col"
-                     span="8">
-              <div>300.00</div>
-            </van-col>
-            <van-col class="v_col"
-                     span="8">
-              <div>400.00</div>
-            </van-col>
-            <van-col class="v_col"
-                     span="8">
-              <div>500.00</div>
+                     span="8" v-for="(v,k) in mplist" :key="k" @click="active=k">
+              <div :class="{'checked':k==active}">{{v}}</div>
             </van-col>
           </van-row>
           <van-button class="btn"
@@ -39,15 +23,46 @@
   </div>
 </template>
 <script>
-import {myAmount} from "@/api/api";
+import {myAmount,getQmgdRechargeMoney} from "@/api/api";
 export default {
   name: "recharge",
   data() {
     return {
-		amount:"0.00"
+		amount:"0.00",
+		mplist:{
+			
+		},
+		active:1
 	};
   },
-  methods: {}
+  methods: {
+	  getAmount(){
+		  myAmount()
+		    .then(res => {
+		      if (res.flag) {
+		        //调用成功
+		       this.amount = res.args.amount;
+		      }
+		    })
+		    .catch(err => {
+		      // 加载状态结束
+		    });
+	  },getList(){
+		  getQmgdRechargeMoney()
+		    .then(res => {
+		      if (res.flag) {
+		        //调用成功
+		       this.mplist = res.args.recharge;
+		      }
+		    })
+		    .catch(err => {
+		      // 加载状态结束
+		    });
+	  },
+	  onChange(tab){
+		  
+	  }
+  }
 };
 </script>
 <style lang="less" scoped>
