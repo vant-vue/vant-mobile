@@ -1,97 +1,240 @@
 <template>
   <div class="selection_box">
     <div class="tab_box">
-      <van-tabs v-model="active" swipeable @change="onTabChange">
-        <van-tab v-for="(item,index) in tabList" :key="index" :index="index">
+      <van-tabs v-model="active"
+                swipeable
+                @change="onTabChange">
+        <van-tab v-for="(item,index) in tabList"
+                 :key="index"
+                 :index="index">
           <div slot="title">
             <span>{{item}}</span>
           </div>
-          <!-- 赛事 -->
-          <van-cell
-            @click="clickArrowDirection"
-            title="2018-11-31  周一  14场比赛"
-            is-link
-            :arrow-direction="arrowDirection"
-          />
-          <div class="list_box">
-            <van-row type="flex" align="center">
-              <van-col span="6"></van-col>
-              <van-col span="18" class="tc">
-                <van-row>
-                  <van-col span="8" class="tit1">墨尔本城</van-col>
-                  <van-col span="8">VS</van-col>
-                  <van-col span="8" class="tit1">悉尼FC</van-col>
-                </van-row>
-              </van-col>
-            </van-row>
-            <van-row type="flex" align="center">
-              <van-col span="6" class="tc">
-                <div>周三001</div>
-                <div>澳洲甲</div>
-                <div>16:40截止</div>
-              </van-col>
-              <van-col span="18" class="tc">
-                <table>
-                  <tr>
-                    <td>0</td>
-                    <td>
-                      胜 2.01
-                      <!-- 不满足需求可使用图片 -->
-                      <i class="sanjiao"></i>
-                    </td>
-                    <td>平 2.01</td>
-                    <td>负 2.01</td>
-                    <td rowspan="2" class="width32" @click="isShow">更多选项</td>
-                  </tr>
-                  <tr>
-                    <td>+1</td>
-                    <td>胜 2.01</td>
-                    <td>平 2.01</td>
-                    <td>负 2.01</td>
-                  </tr>
-                </table>
-              </van-col>
-            </van-row>
+          <!-- 足球 -->
+          <div v-show="active == 0">
+            <van-cell @click="clickArrowDirection"
+                      title="2018-11-31  周一  14场比赛"
+                      is-link
+                      :arrow-direction="arrowDirection" />
+            <div class="list_box">
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"></van-col>
+                <van-col span="18"
+                         class="tc">
+                  <van-row>
+                    <van-col span="8"
+                             class="tit1">墨尔本城</van-col>
+                    <van-col span="8">VS</van-col>
+                    <van-col span="8"
+                             class="tit1">悉尼FC</van-col>
+                  </van-row>
+                </van-col>
+              </van-row>
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"
+                         class="tc">
+                  <div>周三001</div>
+                  <div>澳洲甲</div>
+                  <div>16:40截止</div>
+                </van-col>
+                <van-col span="18"
+                         class="tc">
+                  <table>
+                    <tr>
+                      <td>0</td>
+                      <td>
+                        胜 2.01
+                        <!-- 不满足需求可使用图片 -->
+                        <i class="sanjiao"></i>
+                      </td>
+                      <td>平 2.01</td>
+                      <td>负 2.01</td>
+                      <td rowspan="2"
+                          class="width32"
+                          @click="isShow">更多选项</td>
+                    </tr>
+                    <tr>
+                      <td>+1</td>
+                      <td>胜 2.01</td>
+                      <td>平 2.01</td>
+                      <td>负 2.01</td>
+                    </tr>
+                  </table>
+                </van-col>
+              </van-row>
+            </div>
+            <div class="list_box">
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"></van-col>
+                <van-col span="18"
+                         class="tc">
+                  <van-row>
+                    <van-col span="8"
+                             class="tit1">墨尔本城</van-col>
+                    <van-col span="8">VS</van-col>
+                    <van-col span="8"
+                             class="tit1">悉尼FC</van-col>
+                  </van-row>
+                </van-col>
+              </van-row>
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"
+                         class="tc">
+                  <div>周三001</div>
+                  <div>澳洲甲</div>
+                  <div>16:40截止</div>
+                </van-col>
+                <van-col span="18"
+                         class="tc">
+                  <table>
+                    <tr>
+                      <td>0</td>
+                      <td>
+                        胜 2.01
+                        <!-- 不满足需求可使用图片 -->
+                        <i class="sanjiao"></i>
+                      </td>
+                      <td>平 2.01</td>
+                      <td>负 2.01</td>
+                      <td rowspan="2"
+                          class="width32"
+                          @click="isShow">更多选项</td>
+                    </tr>
+                    <tr>
+                      <td>+1</td>
+                      <td>胜 2.01</td>
+                      <td>平 2.01</td>
+                      <td>负 2.01</td>
+                    </tr>
+                  </table>
+                </van-col>
+              </van-row>
+            </div>
           </div>
-          <div class="list_box">
-            <van-row type="flex" align="center">
-              <van-col span="6"></van-col>
-              <van-col span="18" class="tc">
-                <van-row>
-                  <van-col span="8" class="tit1">墨尔本城</van-col>
-                  <van-col span="8">VS</van-col>
-                  <van-col span="8" class="tit1">悉尼FC</van-col>
-                </van-row>
-              </van-col>
-            </van-row>
-            <van-row type="flex" align="center">
-              <van-col span="6" class="tc">
-                <div>周三001</div>
-                <div>澳洲甲</div>
-                <div>16:40截止</div>
-              </van-col>
-              <van-col span="18" class="tc">
-                <table>
-                  <tr>
-                    <td>0</td>
-                    <td>
-                      胜 2.01
-                      <!-- 不满足需求可使用图片 -->
-                      <i class="sanjiao"></i>
-                    </td>
-                    <td>平 2.01</td>
-                    <td>负 2.01</td>
-                    <td rowspan="2" class="width32" @click="isShow">更多选项</td>
-                  </tr>
-                  <tr>
-                    <td>+1</td>
-                    <td>胜 2.01</td>
-                    <td>平 2.01</td>
-                    <td>负 2.01</td>
-                  </tr>
-                </table>
-              </van-col>
-            </van-row>
+          <!-- 篮球 -->
+          <div v-show="active == 1">
+            <van-cell @click="clickArrowDirection"
+                      title="2018-11-31  周一  14场比赛"
+                      is-link
+                      :arrow-direction="arrowDirection" />
+            <div class="list_box">
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"></van-col>
+                <van-col span="18"
+                         class="tc">
+                  <van-row>
+                    <van-col span="8"
+                             class="tit1">老鹰</van-col>
+                    <van-col span="8">VS</van-col>
+                    <van-col span="8"
+                             class="tit1">黄蜂</van-col>
+                  </van-row>
+                </van-col>
+              </van-row>
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"
+                         class="tc">
+                  <div>301</div>
+                  <div>NBA</div>
+                  <div>16:40截止</div>
+                </van-col>
+                <van-col span="18"
+                         class="tc">
+                  <table>
+                    <tr>
+                      <td>非让分</td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                        <!-- 不满足需求可使用图片 -->
+                        <i class="sanjiao"></i>
+                      </td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                      </td>
+                      <td rowspan="2"
+                          class="width32"
+                          @click="isShowTwo">更多选项</td>
+                    </tr>
+                    <tr>
+                      <td>让分</td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                      </td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                      </td>
+                    </tr>
+                  </table>
+                </van-col>
+              </van-row>
+            </div>
+            <div class="list_box">
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"></van-col>
+                <van-col span="18"
+                         class="tc">
+                  <van-row>
+                    <van-col span="8"
+                             class="tit1">老鹰</van-col>
+                    <van-col span="8">VS</van-col>
+                    <van-col span="8"
+                             class="tit1">黄蜂</van-col>
+                  </van-row>
+                </van-col>
+              </van-row>
+              <van-row type="flex"
+                       align="center">
+                <van-col span="6"
+                         class="tc">
+                  <div>301</div>
+                  <div>NBA</div>
+                  <div>16:40截止</div>
+                </van-col>
+                <van-col span="18"
+                         class="tc">
+                  <table>
+                    <tr>
+                      <td>非让分</td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                        <!-- 不满足需求可使用图片 -->
+                        <i class="sanjiao"></i>
+                      </td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                      </td>
+                      <td rowspan="2"
+                          class="width32"
+                          @click="isShowTwo">更多选项</td>
+                    </tr>
+                    <tr>
+                      <td>让分</td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                      </td>
+                      <td>
+                        <div>主负</div>
+                        <div>2.30</div>
+                      </td>
+                    </tr>
+                  </table>
+                </van-col>
+              </van-row>
+            </div>
           </div>
         </van-tab>
       </van-tabs>
@@ -99,27 +242,34 @@
     <!-- 底部 -->
     <div class="footer_box">
       <div>
-        <van-row class="tc" type="flex" align="center">
+        <van-row class="tc"
+                 type="flex"
+                 align="center">
           <van-col span="18">
             <div class="tl">
-              <van-icon class="ioc" name="clear" />
-              <span class="tit1" @click="isDialog">推单赔率限制说明</span>
+              <van-icon class="ioc"
+                        name="clear" />
+              <span class="tit1"
+                    @click="isDialog">推单赔率限制说明</span>
             </div>
           </van-col>
-          <van-col class="tit4" span="6">
+          <van-col class="tit4"
+                   span="6">
             <span>确定</span>
           </van-col>
         </van-row>
       </div>
     </div>
     <switch-store-model ref="switchModel"></switch-store-model>
+    <switch-store-model-two ref="switchModelTwo"></switch-store-model-two>
   </div>
 </template>
 <script>
 import switchStoreModel from "./modules/switchStoreModel";
+import switchStoreModelTwo from "./modules/switchStoreModelTwo";
 export default {
   name: "selection_scheme",
-  components: { switchStoreModel },
+  components: { switchStoreModel, switchStoreModelTwo },
   data() {
     return {
       active: 0,
@@ -130,6 +280,9 @@ export default {
   methods: {
     isShow() {
       this.$refs.switchModel.show = true;
+    },
+    isShowTwo(){
+      this.$refs.switchModelTwo.show = true;
     },
     onTabChange(tab) {},
     clickArrowDirection() {
