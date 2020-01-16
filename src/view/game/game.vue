@@ -15,13 +15,17 @@
         <van-row type="flex"
                  align="center">
           <van-col span="19">
-            <van-button @click="show = true"
+            <van-button class="btn" @click="show = true"
                         icon="calender-o"
                         size="small"
                         plain
                         hairline
                         color="#323232"
-                        block>{{date}}</van-button>
+                        block>
+                        <van-icon class="left" name="arrow-left" />
+                        <span>{{date}}</span>
+                        <van-icon class="right" name="arrow" />
+                        </van-button>
           </van-col>
           <van-col span="5"
                    class="tr">
