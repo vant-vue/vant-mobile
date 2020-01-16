@@ -14,7 +14,7 @@
           </van-row>
           <van-row type="flex" align="center">
             <van-col span="12">
-              <div class="t2">￥2088.33</div>
+              <div class="t2">￥{{income}}</div>
             </van-col>
             <van-col span="12" class="tr">
               <router-link :to="{path:'/recharge',query:{}}">
@@ -37,42 +37,47 @@
               </van-col>
             </van-row>
           </van-cell>
-          <van-cell>
-            <van-row class="list" type="flex" align="center">
-              <van-col span="12">
-                <span>2019-03-23 12:22</span>
-              </van-col>
-              <van-col span="6" class="tc">
-                <span>中奖佣金</span>
-              </van-col>
-              <van-col span="6" class="tr">
-                <span :class="{'red':false,'green':true}">-2元</span>
-              </van-col>
-            </van-row>
-          </van-cell>
-          <van-cell>
-            <van-row class="list" type="flex" align="center">
-              <van-col span="12">
-                <span>2019-03-23 12:22</span>
-              </van-col>
-              <van-col span="6" class="tc">
-                <span>方案销售</span>
-              </van-col>
-              <van-col span="6" class="tr">
-                <span :class="{'red':true,'green':false}">-2元</span>
-              </van-col>
-            </van-row>
-          </van-cell>
+		  <van-list v-model="loading"
+		            :offset="0"
+		            :finished="finished"
+		            finished-text="没有更多了"
+		            @load="onLoad">
+			<van-cell  v-for="(v,k) in list"  :key="k">
+				<van-row class="list" type="flex" align="center">
+				  <van-col span="12">
+					<span>{{v.insertTime.substring(0,16)}}</span>
+				  </van-col>
+				  <van-col span="6" class="tc">
+					<span>{{cashTypeMap[v.cashType]}}</span>
+				  </van-col>
+				  <van-col span="6" class="tr">
+					<span class="red">{{v.payMoney}}元</span>
+				  </van-col>
+				</van-row>
+			  </van-cell>
+		  	</van-list>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+	import {myAmount,mycashRecord} from "@/api/api";
+	import {CASH_TYPE} from '@/utils/Constant'
 export default {
   name: "myEarnings",
   data() {
-    return {};
+    return {
+		list: [],
+		loading: false,
+		finished: false,
+		searchMap:{
+			pageNo:1,
+			type:2
+		},
+		income:"0.00",
+		cashTypeMap:CASH_TYPE
+	};
   },
   methods: {
     isDialog() {
@@ -86,7 +91,50 @@ export default {
         .then(() => {
           // on close
         });
-    }
+    }, onLoad() {
+	    // 异步更新数据
+	    setTimeout(() => {
+		 let map = this.seachMap;
+	      mycashRecord(map)
+	        .then(res => {
+	          if (res.flag) {
+	            //调用成功
+	            if (res.list && res.list.length > 0) {
+	              for (let i = 0; i < res.list.length; i++) {
+	                this.list.push(res.list[i]);
+	              }
+	              // 加载状态结束
+	              this.loading = false;
+	              // 数据全部加载完成
+	              if (res.list.length < 10) {
+	                this.finished = true;
+	              } else {
+	                this.pageNo++;
+	              }
+	            } else {
+	              // 加载状态结束
+	              this.loading = false;
+	              this.finished = true;
+	            }
+	          }
+	        })
+	        .catch(err => {
+	          // 加载状态结束
+	          this.loading = false;
+	          this.finished = true;
+	        });
+	    }, 500);
+	},loadAmount(){
+		myAmount()
+		  .then(res => {
+			  if(res.flag){
+				  this.income = res.args.income;
+			  }
+		  })
+		  .catch(err => {
+			// 加载状态结束
+		  });
+	}
   }
 };
 </script>
