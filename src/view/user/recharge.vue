@@ -62,6 +62,10 @@ export default {
 	  onChange(tab){
 		  
 	  }
+  },
+  mounted() {
+    this.getAmount();
+	this.getList();
   }
 };
 </script>

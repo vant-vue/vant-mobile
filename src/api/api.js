@@ -33,6 +33,8 @@ const removeAttention = (params) => postAction("/expert/user/removeAttention", p
 const getExpertData = (params) => postAction("/expert/user/getExpertData", params);// 获取大神数据
 const getBusinessInfo = (params) => postAction("/expert/user/getBusinessInfo", params);//获取首页店主信息 存在自由彩民 展示无信息
 const getQmgdRechargeMoney = (params) => postAction("/expert/user/getQmgdRechargeMoney", params);//获取充值列表
+const storeList = (params) => postAction("/expert/user/storeList", params);//获取绑定的店铺
+const switchStore = (params) => postAction("/expert/user/switchStore", params);//切换绑定的店铺
 
 /**
  * 大神推荐接口
@@ -82,6 +84,8 @@ export {
   getExpertData,
   getBusinessInfo,
   getQmgdRechargeMoney,
+  storeList,
+  switchStore,
   todayList,
   details,
   followDetails,

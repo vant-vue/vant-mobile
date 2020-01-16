@@ -5,27 +5,14 @@
       <div class="store_box">
         <van-row class="list_box"
                  type="flex"
-                 align="center">
+                 align="center" v-for="(v,k) in list" :key="k">
           <van-col span="12">
-            <div class="t1">风云彩店</div>
-            <div class="t2">店主姓名：丁久旭</div>
-            <div class="t3">店内余额：1000.00元</div>
+            <div class="t1">{{v.user_name}}</div>
+            <div class="t2">店主姓名：{{v.store_name}}</div>
+            <div class="t3" v-if="v.cash_amount">店内余额：{{v.cash_amount}}元</div>
           </van-col>
           <van-col span="12"
-                   class="tr">
-            <span class="t4">切换彩店</span>
-          </van-col>
-        </van-row>
-        <van-row class="list_box"
-                 type="flex"
-                 align="center">
-          <van-col span="12">
-            <div class="t1">风云彩店</div>
-            <div class="t2">店主姓名：丁久旭</div>
-            <div class="t3">店内余额：1000.00元</div>
-          </van-col>
-          <van-col span="12"
-                   class="tr">
+                   class="tr" @click="switchS(v.business_id)">
             <span class="t4">切换彩店</span>
           </van-col>
         </van-row>
@@ -34,12 +21,44 @@
   </div>
 </template>
 <script>
+import { Toast } from 'vant';
+import {storeList,switchStore} from "@/api/api";
 export default {
   name: "switch_store",
   data() {
-    return {};
+    return {
+		list:[]
+	};
   },
-  methods: {}
+  methods: {
+	  loadList(){
+		  storeList().then(res => {
+		    if (res.flag) {
+		      //调用成功
+		      this.list = res.list;
+		    }
+		  })
+		  .catch(err => {
+		    console.log(err);
+		  });
+	  },
+	  switchS(businessId){
+		  switchStore({"businessId":businessId}).then(res => {
+		    if (res.flag) {
+		      //调用成功
+		     Toast.success('切换成功');
+		     setTimeout(() => {
+		     	this.$router.push({ path: "/home" });
+		     }, 800);
+		    }
+		  })
+		  .catch(err => {
+		    console.log(err);
+		  });
+	  }
+  }, mounted() {
+    this.loadList();
+  }
 };
 </script>
 <style lang="less" scoped>
