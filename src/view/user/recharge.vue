@@ -3,7 +3,7 @@
     <!-- <Header></Header> -->
     <div class="main_box">
       <div class="recharge_box">
-        <div class="top">账户余额：100:00</div>
+        <div class="top">账户余额：{{amount}}</div>
         <div class="content">
           <div class="title">选择充值金额</div>
           <van-row gutter="20"
@@ -39,10 +39,13 @@
   </div>
 </template>
 <script>
+import {myAmount} from "@/api/api";
 export default {
   name: "recharge",
   data() {
-    return {};
+    return {
+		amount:"0.00"
+	};
   },
   methods: {}
 };
