@@ -8,6 +8,7 @@ import { getAction, postAction, deleteAction, putAction } from '@/api/manage'
 const rankList = (params) => postAction("/expert/home/rankList", params);//首页排名
 const advList = (params) => postAction("/expert/home/advList", params);//首页广告
 const getHotMatch = (params) => postAction("/expert/home/getHotMatch", params);//首页焦点赛事
+const getMatch = (params) => postAction("/expert/home/getMatch", params);//首页焦点赛事
 
 /**
  * 个人中心接口----------------------------------------------------
@@ -61,6 +62,7 @@ export {
   rankList,
   advList,
   getHotMatch,
+  getMatch,
   userInfo,
   getPhoneCode,
   bdPhone,
