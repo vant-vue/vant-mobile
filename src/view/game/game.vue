@@ -1,99 +1,119 @@
 <template>
   <div>
     <!-- <Header></Header> -->
-    <div class="main_box">
-      <div class="filter_box">
-        <van-row type="flex"
-                 align="center">
-          <van-col span="19">
-            <van-button @click="show = true"
-                        icon="calender-o"
-                        size="small"
-                        plain
-                        hairline
-                        color="#323232"
-                        block>{{date}}</van-button>
-          </van-col>
-          <van-col span="5"
-                   class="tr">
-            <van-button icon="filter-o"
-                        size="small"
-                        color="linear-gradient(to right, #4bb0ff, #6149f6)"
-                        @click="show_overlay = true">筛选</van-button>
-          </van-col>
-        </van-row>
-      </div>
-      <router-link :to="{path:'/focusGame',query:{}}">
-        <div class="list_box">
-          <van-cell>
-            <van-row class="r_it1"
-                     type="flex"
-                     align="center">
-              <van-col span="12">西甲 周四001</van-col>
-              <van-col span="12"
-                       class="tr">12-22 03:00</van-col>
-            </van-row>
-            <van-row class="r_it2 tc"
-                     type="flex"
-                     align="center">
-              <van-col span="8">
-                <img src="@/assets/home/game.png"
-                     alt />
-                <div>巴萨</div>
-              </van-col>
-              <van-col span="8">
-                <div class="vs">2:1</div>
-                <div class="end">已结束</div>
-                <div class="rec">23个推荐</div>
-              </van-col>
-              <van-col span="8">
-                <img src="@/assets/home/game.png"
-                     alt />
-                <div>皇马</div>
-              </van-col>
-            </van-row>
-          </van-cell>
+
+    <van-tabs v-model="active"
+              swipeable
+              @change="onTabChange">
+      <van-tab v-for="(item,index) in tabList"
+               :key="index"
+               :index="index">
+        <div slot="title">
+          <span>{{item}}</span>
         </div>
-      </router-link>
-      <router-link :to="{path:'/focusGame',query:{}}">
-        <div class="list_box">
-          <van-cell>
-            <van-row class="r_it1"
-                     type="flex"
+        <!-- 赛事 -->
+        <div class="main_box">
+          <div class="filter_box">
+            <van-row type="flex"
                      align="center">
-              <van-col span="12">西甲 周四001</van-col>
-              <van-col span="12"
-                       class="tr">12-22 03:00</van-col>
+              <van-col span="19">
+                <van-button class="btn"
+                            @click="show = true"
+                            icon="calender-o"
+                            size="small"
+                            plain
+                            hairline
+                            color="#323232"
+                            block>
+                  <van-icon class="left"
+                            name="arrow-left" />
+                  <span>{{date}}</span>
+                  <van-icon class="right"
+                            name="arrow" />
+                </van-button>
+              </van-col>
+              <van-col span="5"
+                       class="tr">
+                <van-button icon="filter-o"
+                            size="small"
+                            color="linear-gradient(to right, #4bb0ff, #6149f6)"
+                            @click="show_overlay = true">筛选</van-button>
+              </van-col>
             </van-row>
-            <van-row class="r_it2 tc"
-                     type="flex"
-                     align="center">
-              <van-col span="8">
-                <img src="@/assets/home/game.png"
-                     alt />
-                <div>巴萨</div>
-              </van-col>
-              <van-col span="8">
-                <div class="vs">VS</div>
-                <div class="end">已结束</div>
-                <div class="rec">23个推荐</div>
-              </van-col>
-              <van-col span="8">
-                <img src="@/assets/home/game.png"
-                     alt />
-                <div>皇马</div>
-              </van-col>
-            </van-row>
-          </van-cell>
+          </div>
+          <router-link :to="{path:'/focusGame',query:{}}">
+            <div class="list_box">
+              <van-cell>
+                <van-row class="r_it1"
+                         type="flex"
+                         align="center">
+                  <van-col span="12">西甲 周四001</van-col>
+                  <van-col span="12"
+                           class="tr">12-22 03:00</van-col>
+                </van-row>
+                <van-row class="r_it2 tc"
+                         type="flex"
+                         align="center">
+                  <van-col span="8">
+                    <img src="@/assets/home/game.png"
+                         alt />
+                    <div>巴萨</div>
+                  </van-col>
+                  <van-col span="8">
+                    <div class="vs">2:1</div>
+                    <div class="end">已结束</div>
+                    <div class="rec">23个推荐</div>
+                  </van-col>
+                  <van-col span="8">
+                    <img src="@/assets/home/game.png"
+                         alt />
+                    <div>皇马</div>
+                  </van-col>
+                </van-row>
+              </van-cell>
+            </div>
+          </router-link>
+          <router-link :to="{path:'/focusGame',query:{}}">
+            <div class="list_box">
+              <van-cell>
+                <van-row class="r_it1"
+                         type="flex"
+                         align="center">
+                  <van-col span="12">西甲 周四001</van-col>
+                  <van-col span="12"
+                           class="tr">12-22 03:00</van-col>
+                </van-row>
+                <van-row class="r_it2 tc"
+                         type="flex"
+                         align="center">
+                  <van-col span="8">
+                    <img src="@/assets/home/game.png"
+                         alt />
+                    <div>巴萨</div>
+                  </van-col>
+                  <van-col span="8">
+                    <div class="vs">VS</div>
+                    <div class="end">已结束</div>
+                    <div class="rec">23个推荐</div>
+                  </van-col>
+                  <van-col span="8">
+                    <img src="@/assets/home/game.png"
+                         alt />
+                    <div>皇马</div>
+                  </van-col>
+                </van-row>
+              </van-cell>
+            </div>
+          </router-link>
         </div>
-      </router-link>
-    </div>
+      </van-tab>
+    </van-tabs>
     <Footer></Footer>
     <van-calendar v-model="show"
                   :show-confirm="false"
-				  :min-date="minDate"
-				    :max-date="maxDate"
-					:default-date="defualtDate"
+                  :min-date="minDate"
+                  :max-date="maxDate"
+                  :default-date="defualtDate"
                   @confirm="onConfirm" />
     <!-- 刷选弹窗 -->
     <van-overlay :show="show_overlay"
@@ -158,23 +178,26 @@
 </template>
 
 <script>
-import { getNextDayDate } from '@/utils/util';
+import { getNextDayDate } from "@/utils/util";
 
 export default {
   name: "game",
   components: {},
   data() {
     return {
+      active: 0,
+      tabList: ["足球", "篮球"],
       show: false,
       show_overlay: false,
       date: this.formatDate(new Date()),
-	  minDate:getNextDayDate(-180,new Date()),
-	  maxDate:getNextDayDate(1,new Date()),
-	  defualtDate:new Date()
+      minDate: getNextDayDate(-180, new Date()),
+      maxDate: getNextDayDate(1, new Date()),
+      defualtDate: new Date()
     };
   },
 
   methods: {
+    onTabChange(tab) {},
     week(time) {
       let weekday = new Array(7);
       weekday[0] = "星期天";
@@ -271,12 +294,22 @@ export default {
   font-size: 14px;
   padding: 10px;
   background: #ffffff;
-  input {
-    border-radius: 6px;
-    padding: 5px;
-    border: 1px solid #bfbfbf;
-    text-align: center;
-    width: 100%;
+  .btn {
+    position: relative;
+    .left {
+      font-size: 16px;
+      position: absolute;
+      left: 10px;
+      transform: translateY(-50%);
+      top: 50%;
+    }
+    .right {
+      font-size: 16px;
+      position: absolute;
+      right: 10px;
+      transform: translateY(-50%);
+      top: 50%;
+    }
   }
 }
 .list_box {
