@@ -35,7 +35,7 @@ const getBusinessInfo = (params) => postAction("/expert/user/getBusinessInfo", p
 const getQmgdRechargeMoney = (params) => postAction("/expert/user/getQmgdRechargeMoney", params);//获取充值列表
 const storeList = (params) => postAction("/expert/user/storeList", params);//获取绑定的店铺
 const switchStore = (params) => postAction("/expert/user/switchStore", params);//切换绑定的店铺
-
+const uploadFileWx = (params) => postAction("/expert/user/uploadFileWx", params);//上传图片
 /**
  * 大神推荐接口
  *@date 2020-01-14
@@ -86,6 +86,7 @@ export {
   getQmgdRechargeMoney,
   storeList,
   switchStore,
+  uploadFileWx,
   todayList,
   details,
   followDetails,
