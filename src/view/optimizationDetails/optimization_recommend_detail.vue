@@ -93,17 +93,33 @@
   </div>
 </template>
 <script>
+import {loganExpertDetails,loganHistoryList} from "@/api/api";
+import {paramsMap,betParamMap} from "@/utils/Constant";
+import {by_str,parseTime} from "@/utils/util";
 export default {
   name: "optimization_recommend_detail",
   data() {
     return {
       show: true
-    };
+	 };
   },
   methods: {
     showPopup() {
       this.show = true;
-    }
+    },loadExpert(){
+		loganRlist(map)
+		  .then(res => {
+		    if (res.flag) {
+		      //调用成功
+				
+			}
+		  })
+		  .catch(err => {
+		    // 加载状态结束
+		    this.loading = false;
+		    this.finished = true;
+		  });
+	}
   }
 };
 </script>

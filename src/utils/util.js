@@ -233,3 +233,63 @@ export function stringToDate(date, format){
         });
    return format;
 }
+
+
+/**
+ * 排序，按指定的属性值排序
+ * @param name
+ * @param minor
+ * @returns {Function}
+ */
+export function by_str(name, minor) {
+	return function(o, p) {
+		var a, b;
+		if (typeof o === "object" && typeof p === "object" && o && p) {
+			a = o[name];
+			b = p[name];
+			if (a === b) {
+				return typeof minor === 'function' ? minor(o, p) : 0;
+			}
+			if (typeof a === typeof b) {
+				if(isNaN(a) && isNaN(b)){
+					return a < b ? -1 : 1;
+				}else{
+					return Number(a) < Number(b) ? -1 : 1;
+				}
+			}
+			return typeof a < typeof b ? -1 : 1;
+		}
+	}
+}
+
+
+/**
+ * 将对像进行排序
+ * @param obj 对象
+ * @param name 排序属性名
+ * @param minor 子排序
+ * @param desc 排序方式 desc 降序 asc 
+ * @returns 返回排序好的对象数组
+ */
+export function obj_sort_by(obj,name,minor){
+	var tmp = [];
+	for(var k in obj){
+		tmp.push(obj[k]);
+	}
+	tmp.sort(by_str(name,minor));
+	return tmp;
+}
+
+export function parseTime(str){
+    var dayArr = str.split(' ')[0].split('-');
+    var timeArr = str.split(' ')[1].split(':');
+    var t = new Date();
+    t.setMilliseconds(0);
+    t.setSeconds(Number(timeArr[2]));
+    t.setMinutes(Number(timeArr[1]));
+    t.setHours(Number(timeArr[0]));
+    t.setDate(Number(dayArr[2]));
+    t.setMonth(Number(dayArr[1]) - 1);
+    t.setFullYear(Number(dayArr[0]));
+    return t;
+}
