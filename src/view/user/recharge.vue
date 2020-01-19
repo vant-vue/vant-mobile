@@ -3,7 +3,7 @@
     <!-- <Header></Header> -->
     <div class="main_box">
       <div class="recharge_box">
-        <div class="top">账户余额：{{amount}}</div>
+        <div class="top">账户余额：{{dealDecimal(amount)}}</div>
         <div class="content">
           <div class="title">选择充值金额</div>
           <van-row gutter="20"
@@ -24,6 +24,7 @@
 </template>
 <script>
 import {myAmount,getQmgdRechargeMoney} from "@/api/api";
+import {dealDecimal} from '@/utils/util'
 export default {
   name: "recharge",
   data() {

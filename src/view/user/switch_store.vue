@@ -9,7 +9,7 @@
           <van-col span="12">
             <div class="t1">{{v.user_name}}</div>
             <div class="t2">店主姓名：{{v.store_name}}</div>
-            <div class="t3" v-if="v.cash_amount">店内余额：{{v.cash_amount}}元</div>
+            <div class="t3" v-if="v.cash_amount">店内余额：{{dealDecimal(v.cash_amount)}}元</div>
           </van-col>
           <van-col span="12"
                    class="tr" @click="switchS(v.business_id)">
@@ -23,6 +23,7 @@
 <script>
 import { Toast } from 'vant';
 import {storeList,switchStore} from "@/api/api";
+import {dealDecimal} from '@/utils/util'
 export default {
   name: "switch_store",
   data() {

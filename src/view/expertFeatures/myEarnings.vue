@@ -14,7 +14,7 @@
           </van-row>
           <van-row type="flex" align="center">
             <van-col span="12">
-              <div class="t2">￥{{income}}</div>
+              <div class="t2">￥{{dealDecimal(income)}}</div>
             </van-col>
             <van-col span="12" class="tr">
               <router-link :to="{path:'/recharge',query:{}}">
@@ -51,7 +51,7 @@
 					<span>{{cashTypeMap[v.cashType]}}</span>
 				  </van-col>
 				  <van-col span="6" class="tr">
-					<span class="red">{{v.payMoney}}元</span>
+					<span class="red">{{dealDecimal(v.payMoney)}}元</span>
 				  </van-col>
 				</van-row>
 			  </van-cell>
@@ -64,6 +64,7 @@
 <script>
 	import {myAmount,mycashRecord} from "@/api/api";
 	import {CASH_TYPE} from '@/utils/Constant'
+	import {dealDecimal} from '@/utils/util'
 export default {
   name: "myEarnings",
   data() {

@@ -107,6 +107,7 @@
   </div>
 </template>
 <script>
+	import {dealDecimal} from '@/utils/util'
 export default {
   name: "order_detail",
   data() {

@@ -43,7 +43,7 @@
                       <div class="fot">
                         <van-row type="flex" align="center">
                           <van-col span="10">
-                            <span class="red_color">百元奖金: {{v.hunred_bonus}}</span>
+                            <span class="red_color">百元奖金: {{dealDecimal(v.hunred_bonus)}}</span>
                           </van-col>
                           <van-col span="14" class="tr">
                             <van-icon class="time" name="underway-o" />
@@ -65,7 +65,7 @@
 <script>
 	import {loganRlist} from "@/api/api";
 	import {paramsMap,betParamMap} from "@/utils/Constant";
-	import {by_str,parseTime} from "@/utils/util";
+	import {by_str,parseTime,dealDecimal} from "@/utils/util";
 export default {
   name: "optimization",
   data() {

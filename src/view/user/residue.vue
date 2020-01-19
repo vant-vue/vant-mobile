@@ -8,7 +8,7 @@
                  align="center">
           <van-col span="12">
             <div class="t1">我的余额</div>
-            <div class="t2">￥{{amount}}</div>
+            <div class="t2">￥{{dealDecimal(amount)}}</div>
           </van-col>
           <van-col span="12"
                    class="tr">
@@ -36,7 +36,7 @@
 				  </van-col>
 				  <van-col span="6"
 						   class="tr">
-					<span :class="{'red':v.cashType!=1,'green':v.cashType==1}">{{v.payMoney}}元</span>
+					<span :class="{'red':v.cashType!=1,'green':v.cashType==1}">{{dealDecimal(v.payMoney)}}元</span>
 				  </van-col>
 				</van-row>
 			  </van-cell>
@@ -49,6 +49,7 @@
 <script>
 import {mycashRecord,myAmount} from "@/api/api";
 import {CASH_TYPE} from '@/utils/Constant'
+import {dealDecimal} from '@/utils/util'
 export default {
   name: "residue",
   data() {

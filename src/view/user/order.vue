@@ -49,7 +49,7 @@
                   </van-col>
                   <van-col span="12"
                            class="tr">
-                    <span v-if="v.pay_money&&v.pay_money>0">{{v.pay_money}}</span>
+                    <span v-if="v.pay_money&&v.pay_money>0">{{dealDecimal(v.pay_money)}}</span>
                   </van-col>
                 </van-row>
               </van-cell>
@@ -62,6 +62,7 @@
 </template>
 <script>
 import {myOrder} from "@/api/api";
+import {dealDecimal} from '@/utils/util'
 export default {
   name: "order",
   data() {

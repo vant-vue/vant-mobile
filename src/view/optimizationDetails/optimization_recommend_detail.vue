@@ -12,16 +12,16 @@
                 </van-col>
                 <van-col span="20">
                   <div>
-                    <span class="tit_one">龙眼1号</span>
-                    <span class="tit_two">近10中8</span>
-                    <span class="tit_two">3连红</span>
+                    <span class="tit_one">{{expert.nickName}}</span>
+                    <span class="tit_two" v-if="expert.tenWin>=3">近10中{{expert.tenWin}}</span>
+                    <span class="tit_two" v-if="expert.thisRedCount>=3">{{expert.thisRedCount}}连红</span>
                   </div>
                   <div>
-                    <span class="tit_four">1528 粉丝</span>
+                    <span class="tit_four">{{expert.fans}} 粉丝</span>
                   </div>
                 </van-col>
                 <van-col span="6" class="tr">
-                  <span class="tit_three">关注</span>
+                  <span class="tit_three" @click="attention">{{expert.isAttention?'已关注':'关注'}}</span>
                 </van-col>
               </van-row>
             </van-cell>
@@ -29,63 +29,40 @@
         </div>
         <div class="mid_box">
           <van-row type="flex" align="center">
-            <van-col span="10" class="red_color">百元奖金: 205.56</van-col>
+            <van-col span="10" class="red_color">百元奖金:  {{rec.hunred_bonus?dealDecimal(rec.hunred_bonus):"-"}}</van-col>
             <van-col span="14" class="tr">
               <div class="time">
                 <van-icon class="ti" name="underway-o" />
-                <span>1小时55分25秒后截止</span>
+                <span>{{rec.timeNear}}</span>
               </div>
             </van-col>
           </van-row>
-          <div class="cont_game">
+          <div class="cont_game" v-for="(a,b) in rec.matchArr" :key="b">
             <van-row class="tc" type="flex" align="center">
               <van-col span="6">
-                <img src="@/assets/home/game.png" alt />
+                <img :src="b.hImg" :onerror="this.src='/pt/img/logo-h.png'"  alt />
               </van-col>
               <van-col span="12">
                 <div class="tit1">
-                  <span>巴萨</span>
+                  <span>{{b.hName}}</span>
                   <span>vs</span>
-                  <span>皇马</span>
+                  <span>{{b.aName}}</span>
                 </div>
-                <div class="tit2">西甲 周四001 12-22 03:00</div>
+                <div class="tit2">{{a.lName}} {{a.endTime?a.endTime:''}}</div>
               </van-col>
               <van-col span="6">
-                <img src="@/assets/home/game.png" alt />
+                <img :src="b.aImg" :onerror="this.src='/pt/img/logo-a.png'"  alt />
               </van-col>
             </van-row>
             <div class="ret_a">
-              <img v-if="false" src="@/assets/common/lock.png" alt />
-              <div v-else class="win">胜 1.55</div>
-            </div>
-          </div>
-          <div class="cont_game">
-            <van-row class="tc" type="flex" align="center">
-              <van-col span="6">
-                <img src="@/assets/home/game.png" alt />
-              </van-col>
-              <van-col span="12">
-                <div class="tit1">
-                  <span>巴萨</span>
-                  <span>vs</span>
-                  <span>皇马</span>
-                </div>
-                <div class="tit2">西甲 周四001 12-22 03:00</div>
-              </van-col>
-              <van-col span="6">
-                <img src="@/assets/home/game.png" alt />
-              </van-col>
-            </van-row>
-            <div class="ret_a">
-              <img v-if="false" src="@/assets/common/lock.png" alt />
-              <div v-else class="win">胜 1.55</div>
+              <div class="win">{{b.betStr}}</div>
             </div>
           </div>
         </div>
         <!-- 底部 -->
-        <div class="footer_box">
+        <div class="footer_box" v-if="isGd">
           <div>
-            <div class="tit5">跟单</div>
+            <div class="tit5" >跟单</div>
           </div>
         </div>
       </div>
@@ -93,25 +70,52 @@
   </div>
 </template>
 <script>
-import {loganExpertDetails,loganHistoryList} from "@/api/api";
+import { Toast } from 'vant';
+import {loganDetails,attentionExpert,removeAttention} from "@/api/api";
 import {paramsMap,betParamMap} from "@/utils/Constant";
-import {by_str,parseTime} from "@/utils/util";
+import {by_str,parseTime,dealDecimal} from "@/utils/util";
 export default {
   name: "optimization_recommend_detail",
   data() {
     return {
-      show: true
+	  searchMap:{
+		  recommendId:this.$route.query.recommendId
+	  },
+	  yhMap:{"1":"均优","2":"博热","3":"搏冷"},
+	  expert:{
+		  
+	  },
+	  rec:{
+		  
+	  },isGd:false
 	 };
   },
   methods: {
-    showPopup() {
-      this.show = true;
-    },loadExpert(){
-		loganRlist(map)
+  loadDetail(){
+		loganDetails(this.searchMap)
 		  .then(res => {
 		    if (res.flag) {
 		      //调用成功
-				
+				this.expert.nickName = res.args.nickName;
+				this.expert.tenWin = res.args.tenWin;
+				this.expert.thisRedCount = res.args.thisRedCount;
+				this.expert.fans = res.args.fans;
+				this.expert.expertId = res.args.expertId;
+				this.expert.isAttention = res.args.isAttention;
+				this.expert.attentionId = res.args.attentionId;
+				this.rec = res.args.rec;
+				if(rec){
+					let matchJson = eval('(' +rec.content+')');
+					rec.matchArr = this.formatContent(matchJson,rec.yh);
+					if(rec.winStatus!=-1){
+						rec.timeNear="已结束";
+					}else{
+						rec.timeNear = this.formatEndTime(rec.book_end_time);
+						if(rec.timeNear!="已截止"){
+							this.isGd = true;
+						}
+					}
+				}
 			}
 		  })
 		  .catch(err => {
@@ -119,6 +123,101 @@ export default {
 		    this.loading = false;
 		    this.finished = true;
 		  });
+	},formatContent(matchJson,yh){
+		let jsonArr = [];
+		let isYh = false;
+		for(let b in matchJson){
+			let match = matchJson[b];
+			let obj = {};
+			for(let a in match){
+				if(a=="winBet"||a=="isRemove"||a=="winStatus"){
+					continue;
+				}
+				obj.hName = match[a].home_team;
+				obj.aName = match[a].visiting_team;
+				obj.lName = match[a].lname;
+				obj.num = match[a].bno_cn;
+				obj.hImg = '/static/teamlogo/png/'+match[a].h_id+'.png';
+				obj.aImg = '/static/teamlogo/png/'+match[a].a_id+'.png';
+				obj.endTime = match[a].time.replace(/_/g,":").substrng(5,11);
+			    let bet = obj.bet;
+				if(!bet){
+					bet = [];
+				}
+				let betObj = {};
+				betObj.bet = match[a].bet.indexOf("r")!=-1?match[a].bet.substring(1):match[a].bet;
+				betObj.odd = match[a].odd;
+				betObj.lott = match[a].lott;
+				betObj.txt = paramsMap[betObj.lott][betObj.bet];
+				betObj.sortBy = betParamMap[match[a].lott][betObj.bet];
+				bet.push(betObj);
+				obj.bet = bet;
+			}
+			obj.bet.sort(by_str("sortBy"));
+			let betStr = "";
+			for(let c in obj.bet){
+				let d = obj.bet[c];
+				betStr += " "+d.txt+d.odd;
+			}
+			betStr = betStr.substring(1);
+			if(obj.bet.length>1&&!isYh&&yh>0){
+				isYh = true;
+				betStr += " ("+this.yhMap[yh]+")";
+			}
+			obj.betStr = betStr;
+			jsonArr.push(obj);
+		}
+		return jsonArr;
+	},formatEndTime(endTime){
+		if(typeof endTime == "string"){
+			endTime = parseTime(endTime);
+		}
+		if(endTime.getTime()<new Date().getTime()){
+			return "已截止";
+		}
+		let hm = endTime.getTime() - new Date().getTime();
+		let day = hm/(1000*3600*24);//天数
+		let str = "";
+		if(day>0){
+			str += day+"天";
+		}
+		hm = hm%(1000*3600*24);
+		let hour = hm/(3600*1000);//小时
+		if(hour>0){
+			str += day+"小时";
+		}
+		hm = hm%(3600*24);
+		let min = hm/(60*1000);//分钟
+		str += min+"分后截止";
+		return str;
+	},attention(){
+		if(this.expert.isAttention&&this.expert.attentionId){//已关注的情况
+			removeAttention({"attentionId":this.expert.attentionId})
+			  .then(res => {
+			    if (res.flag) {
+			      //调用成功
+				  Toast.success('取消成功');
+				  this.expert.isAttention = false;
+				  this.expert.attentionId = null;
+				}
+			  })
+			  .catch(err => {
+			    // 加载状态结束
+			  });
+		}else{
+			attentionExpert({"attentionId":this.seachMap.expertId,"type":2})
+			  .then(res => {
+			    if (res.flag) {
+			      //调用成功
+				  Toast.success("关注成功");
+				  this.expert.isAttention = true;
+				  this.expert.attentionId = res.args.id;
+				}
+			  })
+			  .catch(err => {
+			    // 加载状态结束
+			  });
+		}
 	}
   }
 };

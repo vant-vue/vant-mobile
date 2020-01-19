@@ -12,15 +12,15 @@
                 </van-col>
                 <van-col span="20">
                   <div>
-                    <span class="tit_one">{{this.expert.nickName}}</span>
+                    <span class="tit_one">{{expert.nickName}}</span>
                     <!-- <span class="tit_two">近10中8</span> -->
                   </div>
                   <div>
-                    <span class="tit_one">{{this.expert.fans}}粉丝</span>
+                    <span class="tit_one">{{expert.fans}}粉丝</span>
                   </div>
                 </van-col>
                 <van-col span="6" class="tr">
-                  <span class="tit_three" @click="attention">{{this.expert.isAttention?'已关注':'关注'}}</span>
+                  <span class="tit_three" @click="attention">{{expert.isAttention?'已关注':'关注'}}</span>
                 </van-col>
               </van-row>
               <!-- <div class="fon">长期从事竞彩分析工作专业分析师，国家认证彩票分析师。</div> -->
@@ -30,29 +30,29 @@
         <div class="mid_box">
           <van-row class="li_item tc" type="flex" align="center">
             <van-col span="8">
-              <div>{{this.expert.threeNearWinRate>=30?this.expert.threeNearWinRate+'%':'-'}}</div>
+              <div>{{expert.threeNearWinRate>=30?expert.threeNearWinRate+'%':'-'}}</div>
               <div>近3天胜率</div>
             </van-col>
             <van-col span="8">
-              <div>{{this.expert.threeNearBackRate>=50?this.expert.threeNearBackRate+'%':'-'}}</div>
+              <div>{{expert.threeNearBackRate>=50?expert.threeNearBackRate+'%':'-'}}</div>
               <div>近3天回报率</div>
             </van-col>
             <van-col span="8">
-              <div>{{this.expert.thisRedCount>2?this.expert.thisRedCount:'-'}}</div>
+              <div>{{expert.thisRedCount>2?expert.thisRedCount:'-'}}</div>
               <div>当前连红</div>
             </van-col>
           </van-row>
           <van-row class="li_item tc" type="flex" align="center">
             <van-col span="8">
-              <div>{{this.expert.sevenNearWinRate>=30?this.expert.sevenNearWinRate+'%':'-'}}</div>
+              <div>{{expert.sevenNearWinRate>=30?expert.sevenNearWinRate+'%':'-'}}</div>
               <div>近7天胜率</div>
             </van-col>
             <van-col span="8">
-              <div>{{this.expert.sevenNearBackRate>=50?this.expert.sevenNearBackRate+'%':'-'}}</div>
+              <div>{{expert.sevenNearBackRate>=50?expert.sevenNearBackRate+'%':'-'}}</div>
               <div>近7天回报率</div>
             </van-col>
             <van-col span="8">
-              <div>{{this.expert.historyRedCount>4?this.expert.historyRedCount:'-'}}</div>
+              <div>{{expert.historyRedCount>4?expert.historyRedCount:'-'}}</div>
               <div>当前连红</div>
             </van-col>
           </van-row>
@@ -75,7 +75,7 @@
           <div class="fot">
             <van-row type="flex" align="center">
               <van-col span="10">
-                <span class="red_color">百元奖金: {{v.hunred_bonus}}</span>
+                <span class="red_color">百元奖金: {{dealDecimal(v.hunred_bonus)}}</span>
               </van-col>
               <van-col span="14" class="tr">
                 <van-icon class="time" name="underway-o" />
@@ -107,7 +107,7 @@
 			  <div class="fot">
 				<van-row type="flex" align="center">
 				  <van-col span="10">
-					<span class="gray">百元奖金:  {{v.hunred_bonus}}</span>
+					<span class="gray">百元奖金:  {{dealDecimal(v.hunred_bonus)}}</span>
 				  </van-col>
 				  <van-col span="14" class="tr">
 					<van-icon class="time" name="underway-o" />
@@ -125,7 +125,7 @@
 import { Toast } from 'vant';
 import {loganExpertDetails,loganHistoryList,attentionExpert,removeAttention} from "@/api/api";
 import {paramsMap,betParamMap} from "@/utils/Constant";
-import {by_str,parseTime} from "@/utils/util";
+import {by_str,parseTime,dealDecimal} from "@/utils/util";
 export default {
   name: "optimization_recommend_detail",
   data() {
@@ -162,7 +162,6 @@ export default {
 			this.expert.threeNearBackRate = res.args.threeNearBackRate;
 			this.expert.sevenNearWinRate = res.args.sevenNearWinRate;
 			this.expert.sevenNearBackRate = res.args.sevenNearBackRate;
-			this.expert.thisRedCount = res.args.thisRedCount;
 			this.expert.historyRedCount = res.args.historyRedCount;
 			this.expert.isAttention = res.args.isAttention;
 			this.expert.attentionId = res.args.attentionId;
@@ -232,7 +231,7 @@ export default {
 				obj.aName = match[a].visiting_team;
 				obj.lName = match[a].lname;
 				obj.num = match[a].bno_cn;
-				obj.endTime = match[a].time.replace(/_/g,":").substrng(0,5);
+				obj.endTime = match[a].time.replace(/_/g,":").substrng(5,10);
 			    let bet = obj.bet;
 				if(!bet){
 					bet = [];

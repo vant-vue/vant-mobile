@@ -40,7 +40,7 @@
               center
               icon="volume-o"
               value-class="val_cla"
-			  :value="usinfo.cashAmount?usinfo.cashAmount:'0.00'"
+			  :value="usinfo.cashAmount?dealDecimal(usinfo.cashAmount):'0.00'"
             />
           </router-link>
           <router-link :to="{path:'/focus',query:{}}">
@@ -84,6 +84,7 @@
 
 <script>
 import {userInfo} from "@/api/api";
+import {dealDecimal} from '@/utils/util'
 export default {
   name: "user",
   components: {},

@@ -72,6 +72,7 @@
   </div>
 </template>
 <script>
+import {dealDecimal} from '@/utils/util'
 export default {
   name: "recommend_detail_common",
   data() {
