@@ -106,19 +106,22 @@ export default {
 		  }
 		  if(this.sub.nickName==''){
 			  this.errmsg.nickName = "请输入昵称";
-			  console.log( this.errmsg)
+			 document.documentElement.scrollTop = 0;
 			  return;
 		  }
 		  if(this.sub.introduce==''){
 			  this.errmsg.introduce = "请输入个人介绍";
+			  document.documentElement.scrollTop = 0;
 			  return;
 		  }
 		 if(this.sub.name==''){
 			  this.errmsg.name = "请输入姓名";
+			  document.documentElement.scrollTop = 0;
 			  return;
 		 }
 		 if(!isIdNumber(this.sub.idNumber)){
 			  this.errmsg.idNumber = "身份证号格式错误";
+			  document.documentElement.scrollTop = 0;
 			  return;
 		 }
 		 if(this.sub.reson==""){
@@ -142,13 +145,13 @@ export default {
 			  return;
 		 }
 		 this.isBtn = true;
-		 this.fontUrl = this.file.fontUrl[0].content;
-		 this.backUrl = this.file.backUrl[0].content;
+		 this.sub.fontUrl = this.file.fontUrl[0].content;
+		 this.sub.backUrl = this.file.backUrl[0].content;
 		 var resonFileArr = [];
 		 for(let b=0;b<this.file.resonFile.length;b++){
 			 resonFileArr.push(this.file.resonFile[b].content);
 		 }
-		 this.resonFile = resonFileArr.join("|");
+		 this.sub.resonFile = resonFileArr.join("|");
 		 Toast.loading({
 		   message: '数据提交中...',
 		   forbidClick: true
