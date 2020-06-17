@@ -62,7 +62,8 @@ export default {
 			type:1
 		},
 		amount:"0.00",
-		cashTypeMap:CASH_TYPE
+		cashTypeMap:CASH_TYPE,
+		dealDecimal:dealDecimal
 	};
   },
   methods: {
@@ -100,15 +101,13 @@ export default {
 	        });
 	    }, 500);
 	},loadAmount(){
-		myAmount()
-		  .then(res => {
-			  if(res.flag){
-				  this.amount = res.args.amount;
-			  }
-		  })
-		  .catch(err => {
-			// 加载状态结束
-		  });
+		myAmount().then(res => {
+		  if(res.flag){
+			  this.amount = res.args.amount;
+		  }
+	   }).catch(err => {
+		// 加载状态结束
+	   });
 	}
   }
 };

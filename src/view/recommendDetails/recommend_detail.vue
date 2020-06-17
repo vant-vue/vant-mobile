@@ -140,19 +140,93 @@
   </div>
 </template>
 <script>
-	import {dealDecimal} from '@/utils/util'
+import {dealDecimal} from '@/utils/util'
+import {details} from "@/api/api";
+import {formatContent,formatEndTime} from "@/utils/recommendUtils";
 export default {
   name: "recommend_detail",
   data() {
     return {
-      show: true
+     "isBd":false,
+     "level":1,
+     "isPay":false,
+     "nickName":'',
+     "headerImg":'',
+     "nearTenWin":'',
+     "thisRedCount":'',
+     "introduce":'',
+     "isAttention":false,
+     "rec":{},
+     show: true,
+     seachMap:{
+     			  rid:this.$route.query.rid
+     }
     };
   },
   methods: {
     showPopup() {
       this.show = true;
-    }
-  }
+    },attention(){
+			if(this.isAttention&&this.attentionId){//已关注的情况
+				removeAttention({"attentionId":this.attentionId})
+				  .then(res => {
+				    if (res.flag) {
+				      //调用成功
+					  Toast.success('取消成功');
+					  this.isAttention = false;
+					  this.attentionId = null;
+					}
+				  })
+				  .catch(err => {
+				    // 加载状态结束
+				  });
+			}else{
+				attention({"attentionId":this.rec.expertDataId,"type":2})
+				  .then(res => {
+				    if (res.flag) {
+				      //调用成功
+					  Toast.success("关注成功");
+					  this.isAttention = true;
+					  this.attentionId = res.args.id;
+					}
+				  })
+				  .catch(err => {
+				    // 加载状态结束
+				  });
+			}
+		},loadData(){
+			let map = this.seachMap;
+			details(map).then(res => {
+	          if (res.flag) {
+	            //调用成功
+				let args = res.args;
+	            this.isBd = args.isBd;
+				this.isPay = args.isPay;
+				this.level = args.level;
+				this.nickName = args.nickName;
+				this.headerImg = args.headerImg;
+				this.nearTenWin = args.nearTenWin;
+				this.thisRedCount = args.thisRedCount;
+				this.introduce = args.introduce;
+				this.isAttention = args.isAttention;
+				this.rec = args.rec;
+				if(this.rec){
+					 let matchJson = eval('(' +this.rec.content+')');
+					this.rec.timeNear = formatEndTime(this.rec.bookEndTime);
+					this.rec.matchArr = formatContent(matchJson,this.rec.yh);
+				}
+	          }
+	        })
+	        .catch(err => {
+	          // 加载状态结束
+	          this.loading = false;
+	          this.finished = true;
+	        });
+		}
+  },
+  mounted() {
+		this.loadData();//加载推荐数据
+	  }
 };
 </script>
 <style lang="less" scoped>

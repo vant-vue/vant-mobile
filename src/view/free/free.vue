@@ -50,8 +50,7 @@
                          </van-col>
                          <van-col span="12" class="tr">
                            <span class="tit_three" v-if="v.no_win_back">不中退款</span>
-						   <span class="tit_three" v-if="!v.is_free&&v.payMoney">{{dealDecimal(v.payMoney)}}
-						   import {dealDecimal} from '@/utils/util'</span>
+						   <span class="tit_three" v-if="!v.is_free&&v.payMoney">{{dealDecimal(v.payMoney)}}</span>
                            <span class="tit_four" v-if="v.is_free">免费</span>
                          </van-col>
                        </van-row>
@@ -82,7 +81,8 @@ export default {
 	    pageSize: 10,
 	    recommendType: 0,
 	    isFree:1
-	  }
+	  },
+	  dealDecimal:dealDecimal
     };
   },
   methods: {

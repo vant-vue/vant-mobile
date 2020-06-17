@@ -11,7 +11,7 @@
       <div class="tit1">审核成功</div>
       <div class="tit2">恭喜你！成为我们的推荐大神</div>
     </div>
-    <div class="check_box" v-if="status == 2">
+    <div class="check_box" v-if="status == -1">
       <img src="@/assets/home/game.png" alt />
       <div class="tit1">审核失败</div>
       <div class="tit2">别灰心~继续努力吧</div>
@@ -24,14 +24,27 @@
   </div>
 </template>
 <script>
+import {getCheckStatus} from "@/api/api";
 export default {
   name: "check",
   data() {
     return {
-      status: 1
+      status: 0
     };
   },
-  methods: {}
+  methods: {
+	  getCheck(){
+		  getCheckStatus().then(res => {
+		    if (res.flag) {
+		      //调用成功
+		  	 this.status = res.args.status;
+		    }
+		  })
+		  .catch(err => {
+		    console.log(err);
+		  });
+	  }
+  }
 };
 </script>
 <style lang="less" scoped>

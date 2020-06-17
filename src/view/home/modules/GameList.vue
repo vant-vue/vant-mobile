@@ -476,7 +476,8 @@ export default {
         recommendType: 1,
         isTop: 0,
         isAttention: 0
-      }
+      },
+	  dealDecimal:dealDecimal
     };
   },
   methods: {

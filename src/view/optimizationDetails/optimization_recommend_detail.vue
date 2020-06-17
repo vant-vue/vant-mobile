@@ -8,7 +8,7 @@
             <van-cell>
               <van-row class="top" type="flex" align="center">
                 <van-col>
-                  <img src="@/assets/home/game.png" alt />
+                  <img :src="expert.headerImg" alt />
                 </van-col>
                 <van-col span="20">
                   <div>

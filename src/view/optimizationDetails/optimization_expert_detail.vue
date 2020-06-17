@@ -8,7 +8,7 @@
             <van-cell>
               <van-row class="top" type="flex" align="center">
                 <van-col>
-                  <img src="@/assets/home/game.png" alt />
+                  <img :src="expert.headerImg" alt />
                 </van-col>
                 <van-col span="20">
                   <div>
@@ -297,7 +297,7 @@ export default {
 			    // 加载状态结束
 			  });
 		}else{
-			attentionExpert({"attentionId":this.seachMap.expertId,"type":2})
+			attention({"attentionId":this.seachMap.expertId,"type":2})
 			  .then(res => {
 			    if (res.flag) {
 			      //调用成功

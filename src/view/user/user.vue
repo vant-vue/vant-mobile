@@ -90,7 +90,8 @@ export default {
   components: {},
   data() {
     return {
-		usinfo:{}
+		usinfo:{},
+		dealDecimal:dealDecimal
 	};
   },
   methods: {
