@@ -65,11 +65,7 @@ export default {
   mounted() {
     //this.requestGetCase();
     //this.requestPostCase();
-	const userMsg = {
-	                    userId : 123,
-	                    userName : '张三',
-	                    userSite : '上海市浦东新区'
-	                }
+	
   }
 };
 </script>

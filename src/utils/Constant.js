@@ -56,7 +56,18 @@ const paramsMap = {
 	    	"240":"73",
 	    	"250":"72",
 	    	"270":"76"
-	    }
+	    },
+		"lotEnMap":{
+			"had":"非让球",
+			"hhad":"让球",
+			"crs":"比分",
+			"hafu":"半全场",
+			"ttg":"总进球",
+			"mnl":"非让分",
+			"hdc":"让分",
+			"hilo":"大小分",
+			"wnm":"胜分差"
+		}
 	}
 
 const betParamMap={
@@ -128,11 +139,13 @@ const betEnMap={
 		"bdPoolCodeEn":{"had":"200","ttg":"230","hafu":"240","crs":"250","wnm":"210","mnl":"270"}
 }
 
+const poolId = { "hhad":56, "had": 51, "crs": 52, "ttg": 53, "hafu": 54,'ht':59, "mnl": 62, "hdc": 61, "wnm": 63, "hilo":64,'lqht':69,"hhgg":69 };
 
 
 export{
 	CASH_TYPE,
 	paramsMap,
 	betParamMap,
-	betEnMap
+	betEnMap,
+	poolId
 }

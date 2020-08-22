@@ -312,3 +312,11 @@ export function dealDecimal(x) {
   } 
   return s; 
 }
+
+//获取对象的长度
+export function getLen(o) { 
+	if(!o){
+		return 0;
+	}
+   return Object.keys(o).length;
+}

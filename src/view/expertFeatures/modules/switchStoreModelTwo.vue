@@ -8,35 +8,40 @@
                  type="flex"
                  align="center">
           <van-col span="8"
-                   class="tit1">老鹰</van-col>
+                   class="tit1">{{match.a_cn_abbr}}</van-col>
           <van-col span="8">VS</van-col>
           <van-col span="8"
-                   class="tit1">黄蜂</van-col>
+                   class="tit1">{{match.h_cn_abbr}}</van-col>
         </van-row>
         <!-- 胜平负/让球 -->
         <div class="title">胜负/让分胜负</div>
         <table>
           <tr>
             <td class="width10">非让分</td>
-            <td>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['mnl']&&selectModelMap[match.id]['mnl']['a']}"
+			 @click="!match.mnl || selectMatch(match.id,'a','mnl')">
               <div>主负</div>
-              <div>2.01</div>
-              <i class="sanjiao"></i>
+              <div>{{match.mnl?match.mnl.a:'-'}}</div>
+              <i  :class="{'sanjiao':match.mnl&&match.mnl.single=='1'}"></i>
             </td>
-            <td>
-              <div>主负</div>
-              <div>2.01</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['mnl']&&selectModelMap[match.id]['mnl']['h']}"
+			 @click="!match.mnl || selectMatch(match.id,'h','mnl')">
+              <div>主胜</div>
+              <div>{{match.mnl?match.mnl.h:'-'}}</div>
             </td>
           </tr>
           <tr>
             <td class="">让分</td>
-            <td>
-              <div>主胜（+1.5）</div>
-              <div>2.31</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['hdc']&&selectModelMap[match.id]['hdc']['a']}"
+			 @click="!match.hdc || selectMatch(match.id,'a','hdc')">
+              <div>主负（{{match.hdc?match.hdc.fixedodds:'-'}}）</div>
+              <div>{{match.hdc?match.hdc.a:'-'}}</div>
+			   <i  :class="{'sanjiao':match.hdc&&match.hdc.single=='1'}"></i>
             </td>
-            <td>
-              <div>主胜（+1.5）</div>
-              <div>2.31</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['hdc']&&selectModelMap[match.id]['hdc']['h']}"
+			 @click="!match.hdc || selectMatch(match.id,'h','hdc')">
+              <div>主胜（{{match.hdc?match.hdc.fixedodds:'-'}}）</div>
+              <div>{{match.hdc?match.hdc.h:'-'}}</div>
             </td>
           </tr>
         </table>
@@ -45,14 +50,17 @@
         <table>
           <tr>
             <td class="width10">大小分</td>
-            <td class="pr">
-              <div>主负</div>
-              <div>2.01</div>
-              <span class="win_coin">232.5</span>
+            <td class="pr" :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['hilo']&&selectModelMap[match.id]['hilo']['h']}"
+			 @click="!match.hilo || selectMatch(match.id,'h','hilo')">
+              <div>大分</div>
+              <div>{{match.hilo?match.hilo.h:'-'}}</div>
+              <span class="win_coin">{{match.hilo?match.hilo.fixedodds:'-'}}</span>
+			  <i  :class="{'sanjiao':match.hilo&&match.hilo.single=='1'}"></i>
             </td>
-            <td>
-              <div>主负</div>
-              <div>2.01</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['hilo']&&selectModelMap[match.id]['hilo']['l']}"
+			 @click="!match.hilo || selectMatch(match.id,'l','hilo')">
+              <div>小分</div>
+              <div>{{match.hilo?match.hilo.l:'-'}}</div>
             </td>
           </tr>
         </table>
@@ -62,61 +70,73 @@
           <tr>
             <td rowspan="2"
                 class="width10">主负</td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td class="pr" :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['l1']}"
+			 @click="!match.wnm || selectMatch(match.id,'l1','wnm')">
+              <div>1-5</div>
+              <div>{{match.wnm?match.wnm.l1:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['l2']}"
+			 @click="!match.wnm || selectMatch(match.id,'l2','wnm')">
+              <div>6-10</div>
+              <div>{{match.wnm?match.wnm.l2:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['l3']}"
+			 @click="!match.wnm || selectMatch(match.id,'l3','wnm')">
+              <div>11-15</div>
+              <div>{{match.wnm?match.wnm.l3:'-'}}</div>
             </td>
           </tr>
           <tr>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['l4']}"
+			 @click="!match.wnm || selectMatch(match.id,'l4','wnm')">
+              <div>16-20</div>
+              <div>{{match.wnm?match.wnm.l4:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['l5']}"
+			 @click="!match.wnm || selectMatch(match.id,'l5','wnm')">
+              <div>21-25</div>
+              <div>{{match.wnm?match.wnm.l5:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['l6']}"
+			 @click="!match.wnm || selectMatch(match.id,'l6','wnm')">
+              <div>26+</div>
+              <div>{{match.wnm?match.wnm.l6:'-'}}</div>
             </td>
           </tr>
           <tr>
             <td rowspan="2"
                 class="width10">主负</td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['w1']}"
+			 @click="!match.wnm || selectMatch(match.id,'w1','wnm')">
+              <div>1-5</div>
+              <div>{{match.wnm?match.wnm.w1:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['w2']}"
+			 @click="!match.wnm || selectMatch(match.id,'w2','wnm')">
+              <div>6-10</div>
+              <div>{{match.wnm?match.wnm.w2:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['w3']}"
+			 @click="!match.wnm || selectMatch(match.id,'w3','wnm')">
+              <div>11-15</div>
+              <div>{{match.wnm?match.wnm.w3:'-'}}</div>
             </td>
           </tr>
           <tr>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['w4']}"
+			 @click="!match.wnm || selectMatch(match.id,'w4','wnm')">
+              <div>16-20</div>
+              <div>{{match.wnm?match.wnm.w4:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td  :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['w5']}"
+			 @click="!match.wnm || selectMatch(match.id,'w5','wnm')">
+              <div>21-25</div>
+              <div>{{match.wnm?match.wnm.w5:'-'}}</div>
             </td>
-            <td>
-              <div>1:0</div>
-              <div>6.75</div>
+            <td :class="{'active':selectModelMap[match.id]&&selectModelMap[match.id]['wnm']&&selectModelMap[match.id]['wnm']['w6']}"
+			 @click="!match.wnm || selectMatch(match.id,'w6','wnm')">
+              <div>26+</div>
+              <div>{{match.wnm?match.wnm.w6:'-'}}</div>
             </td>
           </tr>
 
@@ -130,7 +150,7 @@
                  @click="close">取消</div>
           </van-col>
           <van-col span="12">
-            <div class="ok">确定</div>
+            <div class="ok"  @click="sureSelect">确定</div>
           </van-col>
         </van-row>
       </div>
@@ -138,20 +158,79 @@
   </van-overlay>
 </template>
 <script>
+import {obj_sort_by,by_str,stringToDate,cloneObject,getLen} from '@/utils/util'
 export default {
   name: "",
   components: {},
 
   data() {
     return {
-      show: false
+      show: false,
+	  selectModelMap:{},
+	  match:{}
     };
   },
 
   methods: {
     close() {
+		if(this.selectModelMap&&this.selectModelMap[this.match.id]){
+				  this.selectModelMap = {};
+		}
       this.show = false;
-    }
+    },
+	sureSelect(){
+		if(this.selectModelMap&&this.selectModelMap[this.match.id]){
+		    this.$parent.selectMap[this.match.id] = cloneObject(this.selectModelMap[this.match.id]);
+		}else{
+			if(this.$parent.selectMap[this.match.id]){
+				delete this.$parent.selectMap[this.match.id];
+			}
+		}
+		this.show = false;
+		this.$parent.caleCount();
+		this.$parent.$forceUpdate();
+	},
+	selectMatch(mid,bet,lot){
+		if(!this.selectModelMap[mid]){
+			if(this.$parent.selectCount==2){
+				return;
+			}
+			if(getLen(this.selectModelMap[mid])>=1){
+				return;
+			}
+			this.selectModelMap[mid] = {};
+			this.selectModelMap[mid][lot] = {};
+			this.selectModelMap[mid][lot][bet] = this.match[lot][bet];
+		}else{
+			if(!this.selectModelMap[mid][lot]){
+				return;
+				//this.selectModelMap[mid][lot] = {};
+				//this.selectModelMap[mid][lot][bet] = this.match[lot][bet];
+			}else{
+				if(this.selectModelMap[mid][lot][bet]){
+					delete this.selectModelMap[mid][lot][bet];
+					if(getLen(this.selectModelMap[mid][lot])==0){
+						delete this.selectModelMap[mid][lot];
+						if(getLen(this.selectModelMap[mid])==0){
+							delete this.selectModelMap[mid];
+						}
+					}
+				}else{
+					if(lot=="wnm"){
+						if(getLen(this.selectModelMap[mid][lot])<4){
+							this.selectModelMap[mid][lot][bet] = this.match[lot][bet];
+						}
+					}else{
+						if(getLen(this.selectModelMap[mid][lot])<1){
+							this.selectModelMap[mid][lot][bet] = this.match[lot][bet];
+						}
+					}
+					
+				}
+			}
+		}
+		this.$forceUpdate();
+	}
   }
 };
 </script>
@@ -191,12 +270,16 @@ table {
         font-size: 10px;
       }
     }
-    td.red {
-      color: #ff0000;
-    }
-    td.green {
-      color: green;
-    }
+   td.red {
+     color: #ff0000;
+   }
+   td.active{
+   	background:#ff0000;
+   	color:#fff;
+   }
+   td.green {
+     color: green;
+   }
   }
   tr:first-child td {
     border-top: 1px solid #bfbfbf;

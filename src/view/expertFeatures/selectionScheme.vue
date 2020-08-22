@@ -12,229 +12,136 @@
           </div>
           <!-- 足球 -->
           <div v-show="active == 0">
-            <van-cell @click="clickArrowDirection"
-                      title="2018-11-31  周一  14场比赛"
-                      is-link
-                      :arrow-direction="arrowDirection" />
-            <div class="list_box">
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"></van-col>
-                <van-col span="18"
-                         class="tc">
-                  <van-row>
-                    <van-col span="8"
-                             class="tit1">墨尔本城</van-col>
-                    <van-col span="8">VS</van-col>
-                    <van-col span="8"
-                             class="tit1">悉尼FC</van-col>
-                  </van-row>
-                </van-col>
-              </van-row>
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"
-                         class="tc">
-                  <div>周三001</div>
-                  <div>澳洲甲</div>
-                  <div>16:40截止</div>
-                </van-col>
-                <van-col span="18"
-                         class="tc">
-                  <table>
-                    <tr>
-                      <td>0</td>
-                      <td>
-                        胜 2.01
-                        <!-- 不满足需求可使用图片 -->
-                        <i class="sanjiao"></i>
-                      </td>
-                      <td>平 2.01</td>
-                      <td>负 2.01</td>
-                      <td rowspan="2"
-                          class="width32"
-                          @click="isShow">更多选项</td>
-                    </tr>
-                    <tr>
-                      <td>+1</td>
-                      <td>胜 2.01</td>
-                      <td>平 2.01</td>
-                      <td>负 2.01</td>
-                    </tr>
-                  </table>
-                </van-col>
-              </van-row>
-            </div>
-            <div class="list_box">
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"></van-col>
-                <van-col span="18"
-                         class="tc">
-                  <van-row>
-                    <van-col span="8"
-                             class="tit1">墨尔本城</van-col>
-                    <van-col span="8">VS</van-col>
-                    <van-col span="8"
-                             class="tit1">悉尼FC</van-col>
-                  </van-row>
-                </van-col>
-              </van-row>
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"
-                         class="tc">
-                  <div>周三001</div>
-                  <div>澳洲甲</div>
-                  <div>16:40截止</div>
-                </van-col>
-                <van-col span="18"
-                         class="tc">
-                  <table>
-                    <tr>
-                      <td>0</td>
-                      <td>
-                        胜 2.01
-                        <!-- 不满足需求可使用图片 -->
-                        <i class="sanjiao"></i>
-                      </td>
-                      <td>平 2.01</td>
-                      <td>负 2.01</td>
-                      <td rowspan="2"
-                          class="width32"
-                          @click="isShow">更多选项</td>
-                    </tr>
-                    <tr>
-                      <td>+1</td>
-                      <td>胜 2.01</td>
-                      <td>平 2.01</td>
-                      <td>负 2.01</td>
-                    </tr>
-                  </table>
-                </van-col>
-              </van-row>
-            </div>
+			 <div v-for="(v,k) in dataMatch">
+				<van-cell @click="clickArrowDirection(k)"
+						  :title="v.title"
+						  is-link
+						  :arrow-direction="v.arrowDirection" />
+				<div class="list_box" v-for="(b,a) in v.list" v-show="v.arrowDirection=='down'">
+				  <van-row type="flex"
+						   align="center">
+					<van-col span="6"></van-col>
+					<van-col span="18"
+							 class="tc">
+					  <van-row>
+						<van-col span="8"
+								 class="tit1">{{b.h_cn_abbr}}</van-col>
+						<van-col span="8">VS</van-col>
+						<van-col span="8"
+								 class="tit1">{{b.a_cn_abbr}}</van-col>
+					  </van-row>
+					</van-col>
+				  </van-row>
+				  <van-row type="flex"
+						   align="center">
+					<van-col span="6"
+							 class="tc">
+					  <div>{{b.num}}</div>
+					  <div>{{b.l_cn_abbr}}</div>
+					  <div>{{b.book_end_time.substring(11,16)}}截止</div>
+					</van-col>
+					<van-col span="18"
+							 class="tc">
+					  <table>
+						<tr>
+						  <td>0</td>
+						  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['had']&&selectMap[b.id]['had']['h']}" @click="!b.had || selectMatch(b.id,'h','had')">
+							胜 {{b.had?b.had.h:'-'}}
+							<!-- 不满足需求可使用图片 -->
+							<i :class="{'sanjiao':b.had&&b.had.single=='1'}"></i>
+						  </td>
+						  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['had']&&selectMap[b.id]['had']['d']}"  @click="!b.had || selectMatch(b.id,'d','had')">平 {{b.had?b.had.d:'-'}}</td>
+						  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['had']&&selectMap[b.id]['had']['a']}"  @click="!b.had || selectMatch(b.id,'a','had')">负 {{b.had?b.had.a:'-'}}</td>
+						  <td rowspan="2"
+							  class="width32"
+							  @click="isShow(b.id)" v-if="!selectMatchCountMap[b.id]">更多选项</td>
+						  <td rowspan="2"
+							  class="width32"
+							  @click="isShow(b.id)" v-if="selectMatchCountMap[b.id]">已选<span style="color: #ff0000;">{{selectMatchCountMap[b.id]}}</span>项</td>
+						</tr>
+						<tr>
+						  <td :class="{'red':b.hhad&&b.hhad.fixedodds.indexOf('+')!=-1,'green':b.hhad&&b.hhad.fixedodds.indexOf('-')!=-1}">{{b.hhad?b.hhad.fixedodds:'-'}}</td>
+						  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['hhad']&&selectMap[b.id]['hhad']['h']}"  @click="!b.hhad || selectMatch(b.id,'h','hhad')">胜 {{b.hhad?b.hhad.h:'-'}}
+							<i :class="{'sanjiao':b.hhad&&b.hhad.single=='1'}"></i>
+						  </td>
+						  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['hhad']&&selectMap[b.id]['hhad']['d']}"  @click="!b.hhad || selectMatch(b.id,'d','hhad')">平 {{b.hhad?b.hhad.d:'-'}}</td>
+						  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['hhad']&&selectMap[b.id]['hhad']['a']}"  @click="!b.hhad || selectMatch(b.id,'a','hhad')">负 {{b.hhad?b.hhad.a:'-'}}</td>
+						</tr>
+					  </table>
+					</van-col>
+				  </van-row>
+				</div>
+			</div>
           </div>
           <!-- 篮球 -->
           <div v-show="active == 1">
-            <van-cell @click="clickArrowDirection"
-                      title="2018-11-31  周一  14场比赛"
-                      is-link
-                      :arrow-direction="arrowDirection" />
-            <div class="list_box">
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"></van-col>
-                <van-col span="18"
-                         class="tc">
-                  <van-row>
-                    <van-col span="8"
-                             class="tit1">老鹰</van-col>
-                    <van-col span="8">VS</van-col>
-                    <van-col span="8"
-                             class="tit1">黄蜂</van-col>
-                  </van-row>
-                </van-col>
-              </van-row>
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"
-                         class="tc">
-                  <div>301</div>
-                  <div>NBA</div>
-                  <div>16:40截止</div>
-                </van-col>
-                <van-col span="18"
-                         class="tc">
-                  <table>
-                    <tr>
-                      <td>非让分</td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                        <!-- 不满足需求可使用图片 -->
-                        <i class="sanjiao"></i>
-                      </td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                      </td>
-                      <td rowspan="2"
-                          class="width32"
-                          @click="isShowTwo">更多选项</td>
-                    </tr>
-                    <tr>
-                      <td>让分</td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                      </td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                      </td>
-                    </tr>
-                  </table>
-                </van-col>
-              </van-row>
-            </div>
-            <div class="list_box">
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"></van-col>
-                <van-col span="18"
-                         class="tc">
-                  <van-row>
-                    <van-col span="8"
-                             class="tit1">老鹰</van-col>
-                    <van-col span="8">VS</van-col>
-                    <van-col span="8"
-                             class="tit1">黄蜂</van-col>
-                  </van-row>
-                </van-col>
-              </van-row>
-              <van-row type="flex"
-                       align="center">
-                <van-col span="6"
-                         class="tc">
-                  <div>301</div>
-                  <div>NBA</div>
-                  <div>16:40截止</div>
-                </van-col>
-                <van-col span="18"
-                         class="tc">
-                  <table>
-                    <tr>
-                      <td>非让分</td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                        <!-- 不满足需求可使用图片 -->
-                        <i class="sanjiao"></i>
-                      </td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                      </td>
-                      <td rowspan="2"
-                          class="width32"
-                          @click="isShowTwo">更多选项</td>
-                    </tr>
-                    <tr>
-                      <td>让分</td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                      </td>
-                      <td>
-                        <div>主负</div>
-                        <div>2.30</div>
-                      </td>
-                    </tr>
-                  </table>
-                </van-col>
-              </van-row>
-            </div>
+			   <div v-for="(v,k) in dataMatch">
+					<van-cell @click="clickArrowDirection(k)"
+							  :title="v.title"
+							  is-link
+							  :arrow-direction="v.arrowDirection" />
+					<div class="list_box"  v-for="(b,a) in v.list"  v-show="v.arrowDirection=='down'">
+					  <van-row type="flex"
+							   align="center">
+						<van-col span="6"></van-col>
+						<van-col span="18"
+								 class="tc">
+						  <van-row>
+							<van-col span="8"
+									 class="tit1">{{b.a_cn_abbr}}</van-col>
+							<van-col span="8">VS</van-col>
+							<van-col span="8"
+									 class="tit1">{{b.h_cn_abbr}}</van-col>
+						  </van-row>
+						</van-col>
+					  </van-row>
+					  <van-row type="flex"
+							   align="center">
+						<van-col span="6"
+								 class="tc">
+						  <div>{{b.num}}</div>
+						  <div>{{b.l_cn_abbr}}</div>
+						  <div>{{b.book_end_time.substring(11,16)}}截止</div>
+						</van-col>
+						<van-col span="18"
+								 class="tc">
+						  <table>
+							<tr>
+							  <td>非让分</td> 
+							  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['mnl']&&selectMap[b.id]['mnl']['a']}" @click="!b.mnl || selectMatch(b.id,'a','mnl')">
+								<div>主负</div>
+								<div>{{b.mnl?b.mnl.a:'-'}}</div>
+								<!-- 不满足需求可使用图片 -->
+								<i  :class="{'sanjiao':b.mnl&&b.mnl.single=='1'}"></i>
+							  </td>
+							  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['mnl']&&selectMap[b.id]['mnl']['h']}" @click="!b.mnl || selectMatch(b.id,'h','mnl')">
+								<div>主胜</div>
+								<div>{{b.mnl?b.mnl.h:'-'}}</div>
+							  </td>
+							  <td rowspan="2"
+									  class="width32"
+									  @click="isShowTwo(b.id)" v-if="!selectMatchCountMap[b.id]">更多选项</td>
+							  <td rowspan="2"
+									  class="width32"
+									  @click="isShowTwo(b.id)" v-if="selectMatchCountMap[b.id]">已选<span style="color: #ff0000;">{{selectMatchCountMap[b.id]}}</span>项</td>
+							</tr>
+							<tr>
+							  <td>让分</td>
+							  <td :class="{'active':selectMap[b.id]&&selectMap[b.id]['hdc']&&selectMap[b.id]['hdc']['a']}" @click="!b.hdc || selectMatch(b.id,'a','hdc')">
+								<div>主负</div>
+								<div>{{b.hdc?b.hdc.a:'-'}}</div>
+								<i  :class="{'sanjiao':b.hdc&&b.hdc.single=='1'}"></i>
+							  </td>
+							  <td  :class="{'active':selectMap[b.id]&&selectMap[b.id]['hdc']&&selectMap[b.id]['hdc']['h']}" @click="!b.hdc || selectMatch(b.id,'h','hdc')">
+								<div>主胜</div>
+								<div>{{b.hdc?b.hdc.h:'-'}}</div>
+							  </td>
+							</tr>
+						  </table>
+						</van-col>
+					  </van-row>
+					</div>
+			</div>
           </div>
         </van-tab>
       </van-tabs>
@@ -248,27 +155,29 @@
           <van-col span="18">
             <div class="tl">
               <van-icon class="ioc"
-                        name="clear" />
+                        name="clear" @click="clearSelect" />
               <span class="tit1"
                     @click="isDialog">推单赔率限制说明</span>
             </div>
           </van-col>
           <van-col class="tit4"
-                   span="6">
+                   span="6" @click="sureSubmit">
             <span>确定</span>
           </van-col>
         </van-row>
       </div>
     </div>
-    <switch-store-model ref="switchModel"></switch-store-model>
+    <switch-store-model ref="switchModel" :selectMap="selectMap"></switch-store-model>
     <switch-store-model-two ref="switchModelTwo"></switch-store-model-two>
   </div>
 </template>
 <script>
+import { Toast } from 'vant';
 import switchStoreModel from "./modules/switchStoreModel";
 import switchStoreModelTwo from "./modules/switchStoreModelTwo";
-import { getJson,pubRec } from "@/api/api";
-import {obj_sort_by,by_str,formatDate} from '@/utils/util'
+import { getJson } from "@/api/api";
+import {poolId} from "@/utils/Constant";
+import {obj_sort_by,by_str,stringToDate,parseTime,getLen,cloneObject} from '@/utils/util'
 export default {
   name: "selection_scheme",
   components: { switchStoreModel, switchStoreModelTwo },
@@ -276,7 +185,7 @@ export default {
     return {
       active: 0,
       tabList: ["竞彩足球", "竞彩篮球"],
-      arrowDirection: "down",
+	  typeList: ["ht", "hhgg"],
 	  seachMap:{
 		  "type":"ht"
 	  },
@@ -284,6 +193,9 @@ export default {
 		  
 	  },
 	  dataMatch:{},
+	  selectMap:{},
+	  selectCount:0,
+	  selectMatchCountMap:{},
 	  g_config:{
 		  minute_before_playtime:5
 	  },
@@ -300,19 +212,52 @@ export default {
 				"周六":6,
 				"周日":7
 		},
-		l_name_map:{},
+		l_name_map:{}
     };
-  },
+  }
+  ,
   methods: {
-    isShow() {
+    isShow(mid) {
+	  this.$refs.switchModel.match = this.jsonData[mid];
+	  let thisMap = this.selectMap[mid];
+	  if(thisMap){
+		  this.$refs.switchModel.selectModelMap[mid]= cloneObject(thisMap);
+	  }else{
+		  this.$refs.switchModel.selectModelMap = {};
+	  }
       this.$refs.switchModel.show = true;
+	  this.$forceUpdate();
     },
-    isShowTwo(){
+    isShowTwo(mid){
+	  this.$refs.switchModelTwo.match = this.jsonData[mid];
+	  let thisMap = this.selectMap[mid];
+	  if(thisMap){
+	  	 this.$refs.switchModelTwo.selectModelMap[mid]= thisMap;
+	  }else{
+	  	 this.$refs.switchModelTwo.selectModelMap = {};
+	  }
       this.$refs.switchModelTwo.show = true;
+	  this.$forceUpdate();
     },
-    onTabChange(tab) {},
-    clickArrowDirection() {
-      this.arrowDirection = this.arrowDirection == "down" ? "up" : "down";
+	clearSelect(){
+		this.selectMap={};
+		this.selectCount =0;
+		this.selectMatchCountMap = {};
+	},
+    onTabChange(tab) {
+		this.dataMatch = {};
+		this.jsonData = {};
+		this.l_name_map = {};
+		this.matchGame = {};
+		this.matchGame.totalMatchCount =0;
+		this.selectCount =0;
+		this.selectMap = {};
+		this.selectMatchCountMap = {};
+		this.seachMap.type = this.typeList[this.active];
+		this.loadData();
+	},
+    clickArrowDirection(k) {
+      this.dataMatch[k].arrowDirection = this.dataMatch[k].arrowDirection == "down" ? "up" : "down";
     },
     isDialog() {
       this.$dialog
@@ -338,17 +283,21 @@ export default {
         });
     },
 	loadData(){
+		var that = this;
 		getJson(this.seachMap).then(res => {
+			let json = res.data;
+			that.jsonData = json;
+			that.formatJson();
             if (res.flag) {
               //调用成功
-              let json = res.args.json;
-			  this.jsonData = json;
-			  this.formatJson();
+              //let json = res.args.json;
+			  //that.jsonData = json;
+			 // that.formatJson();
             }
           }).catch(err => {
             // 加载状态结束
-            this.loading = false;
-            this.finished = true;
+            that.loading = false;
+            that.finished = true;
           });
 	},formatJson(){//格式化竞彩数据
 		var json = this.jsonData;
@@ -387,9 +336,9 @@ export default {
 				}
 				m.bookEndTimeLong=parseTime(m.book_end_time).getTime();
 				m.bookEndTimeLong = m.bookEndTimeLong-this.g_config.minute_before_playtime*60*1000;
-				if(m.bookEndTimeLong<this.nowTime||(m.index_show==1&&m.show==0)){//截止
+				/* if(m.bookEndTimeLong<this.nowTime||(m.index_show==1&&m.show==0)){//截止
 					continue;
-				}
+				} */
 				
 				if(m.crs&&m.crs.single==0&&m.ttg&&m.ttg.single==0){
 					continue;
@@ -406,7 +355,7 @@ export default {
 				this.matchGame[m.l_id].matchCount++;
 				this.matchGame.totalMatchCount++;
 				
-				m.book_end_time = formatDate(new Date(m.bookEndTimeLong),"yyyy-MM-dd hh:mm:ss");
+				m.book_end_time = stringToDate(new Date(m.bookEndTimeLong),"yyyy-MM-dd hh:mm:ss");
 				var key = m.b_date+","+m.num.substring(0,2);
 				var list = dataMatch[key];
 				if(!list){
@@ -451,6 +400,8 @@ export default {
 				item.show=true;
 				item.hasChild = true;
 				if(list!=null&&list.length>0){
+					item.title = item.date+' '+item.week+' '+item.list.length+'场比赛';
+					item.arrowDirection = "down";
 					this.dataMatch[datestr]=item;
 				}
 			}
@@ -460,6 +411,98 @@ export default {
 			this.dataMatch = obj_sort_by(this.dataMatch,"datetem");
 		}
 
+	},
+	selectMatch(mid,bet,lot){
+		if(!this.selectMap[mid]){
+			if(this.selectCount==2){
+				return;
+			}
+			if(getLen(this.selectMap[mid])>=1){
+				return;
+			}
+			this.selectMap[mid] = {};
+			this.selectMap[mid][lot] = {};
+			this.selectMap[mid][lot][bet] = this.jsonData[mid][lot][bet];
+		}else{
+			if(!this.selectMap[mid][lot]){
+				return;
+				//this.selectMap[mid][lot] = {};
+				//this.selectMap[mid][lot][bet] = this.jsonData[mid][lot][bet];
+			}else{
+				if(this.selectMap[mid][lot][bet]){
+					delete this.selectMap[mid][lot][bet];
+					if(getLen(this.selectMap[mid][lot])==0){
+						delete this.selectMap[mid][lot];
+						if(getLen(this.selectMap[mid])==0){
+							delete this.selectMap[mid];
+						}
+					}
+				}else{
+					let maxCount = 1;
+					if(lot=="had"||lot=="hhad"){
+						maxCount =2;
+					}
+					if(getLen(this.selectMap[mid][lot])<maxCount){
+						//最多可以双选
+						this.selectMap[mid][lot][bet] = this.jsonData[mid][lot][bet];
+					}
+				}
+			}
+		}
+		this.caleCount();
+		this.$forceUpdate();
+	},caleCount(){
+		this.selectCount = getLen(this.selectMap);
+		this.selectMatchCountMap = {};
+		if(this.selectMap&&this.selectCount>0){
+			for(var key in this.selectMap){
+				var count =0;
+				if(this.selectMap[key]){
+					for(var k in this.selectMap[key]){
+						count +=  getLen(this.selectMap[key][k]);
+					}
+				}
+				this.selectMatchCountMap[key] = count;
+			}
+		}
+	},sureSubmit(){
+		
+		if(this.selectCount==0){
+			//$.toast("请至少选择一场赛事", "forbidden");
+			Toast.fail('请至少选择一场赛事');
+			return;
+		}
+		var lMap = {};
+		for(var key in this.selectMap){
+			for(var k in this.selectMap[key]){
+				if(k=='m'){
+					continue;
+				}
+				lMap[k] = 1;
+				if(this.selectCount==1&&this.jsonData[key][k].single!=1){
+					//$.toast("非单关至少选择两场赛事", "forbidden");
+					Toast.fail('非单关至少选择两场赛事');
+					return;
+				}
+			}
+			this.selectMap[key]['m'] = this.jsonData[key];
+		}
+		let lotteryId;
+		if(getLen(lMap)>1){
+			  if(this.active==0){
+				  lotteryId = "59";
+			  }else{
+				  lotteryId = "69";
+			  }
+		}else{
+			var lk;
+			for(var jk in lMap){
+				lk = jk;
+			}
+			lotteryId = poolId[lk];
+		}
+		var passway = this.selectCount+"x"+1;
+		this.$router.push({name: 'queryScheme',params:{"selectMap":this.selectMap,"lotteryId":lotteryId,"passway":passway}});
 	}
   },mounted() {
 		this.loadData();//加载数据
@@ -495,6 +538,16 @@ export default {
         font-size: 10px;
       }
     }
+	td.red {
+	  color: #ff0000;
+	}
+	td.active{
+		background:#ff0000;
+		color:#fff;
+	}
+	td.green {
+	  color: green;
+	}
     .width32 {
       width: 32px;
     }

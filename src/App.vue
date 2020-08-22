@@ -5,7 +5,6 @@
     </keep-alive>
   </div>
 </template>
-
 <script>
 window.onload = function() {
   document.addEventListener('touchstart', function(event) {

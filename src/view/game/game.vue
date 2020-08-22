@@ -148,16 +148,15 @@ export default {
       maxDate: getNextDayDate(1, new Date()),
       defualtDate: new Date(),
       errorImg: {
-        h: "this.src='http://m.longw.vip/pt/img/logo-h.png'",
-        a: "this.src='http://m.longw.vip/pt/img/logo-a.png'"
+        h: "this.src='https://m.lycf888.com/pt/img/logo-h.png'",
+        a: "this.src='https://m.lycf888.com/pt/img/logo-a.png'"
       },
       list: [],
       serachMap: {
         sport: "football"
       },
       dateMap: {
-		  next:"2020-01-17",
-		  prev:"2020-01-15"
+		 
 	  },
       lNameMap: {},
       showlNameMap: {}
@@ -216,10 +215,10 @@ export default {
                 let m = this.list[k];
                 this.lNameMap[m.league_name_short] = 1;
                 m.hImg = "/static/teamlogo/png/" + hot.home_team_id + ".png";
-                m.aImg =
-                  "/static/teamlogo/png/" + hot.visiting_team_id + ".png";
+                m.aImg = "/static/teamlogo/png/" + hot.visiting_team_id + ".png";
               }
             }
+			console.log(this.list);
           }
         })
         .catch(err => {
@@ -275,6 +274,8 @@ export default {
 		this.date = this.formatDate(parseDate(this.serachMap.date));
 		this.loadMatch();
 	}
+  },mounted() {
+    loadMatch();
   }
 };
 </script>

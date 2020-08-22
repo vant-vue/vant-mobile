@@ -21,23 +21,23 @@ const err = (error) => {
     console.log("------异常响应------", error.response.status)
     switch (error.response.status) {
       case 403:
-        Toast('提示内容');
+        Toast('错误提示403');
         break
       case 500:
-        Toast('提示内容');
+        Toast('系统忙');
         if (token && data.message == "Token失效，请重新登录") {
-          Toast('提示内容');
+          Toast('系统忙');
           // update-end- --- author:scott ------ date:20190225 ---- for:Token失效采用弹框模式，不直接跳转----
         }
         break
       case 404:
-        Toast('提示内容');
+        Toast('无效的请求');
         break
       case 504:
-        Toast('提示内容');
+        Toast('请求超时');
         break
       case 401:
-        Toast('提示内容');
+        Toast('无权限访问');
         if (token) {
           store.dispatch('LogOut').then(() => {
             setTimeout(() => {
@@ -47,7 +47,7 @@ const err = (error) => {
         }
         break
       default:
-        Toast('提示内容');
+        Toast('系统忙,稍后重试');
         break
     }
   }
@@ -75,11 +75,11 @@ service.interceptors.request.use(config => {
 // response interceptor（响应拦截）
 service.interceptors.response.use((response) => {
   if(response.data.ret == 10004030){
-    Toast('提示内容');
+    Toast('服务器1');
   }else if(response.data.ret == 10001004){
-    Toast('提示内容');
+    Toast('服务器2');
   }else if(response.data.ret == 10004040){
-    Toast('提示内容');
+    Toast('服务器3');
   }
   return response.data
 }, err)

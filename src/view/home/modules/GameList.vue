@@ -17,7 +17,7 @@
                     :finished="finished"
                     finished-text="没有更多了"
                     @load="onLoad">
-            <div class="list_game_box">
+            <!-- <div class="list_game_box">
               <router-link :to="{path:'/recommend_detail',query:{}}">
                 <van-cell>
                   <van-row class="top"
@@ -408,8 +408,8 @@
                   </van-row>
                 </van-cell>
               </router-link>
-            </div>
-            <!-- <div class="list_game_box" v-for="(v,k) in list" :key="k">
+            </div> -->
+            <div class="list_game_box" v-for="(v,k) in list" :key="k">
             <router-link :to="{path:'/recommend_detail',query:{}}">
               <van-cell>
                 <van-row class="top" type="flex" align="center">
@@ -449,7 +449,7 @@
                 </van-row>
               </van-cell>
             </router-link>
-          </div> -->
+          </div>
           </van-list>
         </transition>
       </van-tab>
@@ -466,7 +466,7 @@ export default {
     return {
       transitionName:'slide-out',
       active: 2,
-      tabList: ["关注", "推荐", "二串", "总进球", "半全场", "单关", "篮球"],
+      tabList: ["关注", "推荐", "二串", "总进球", "半全场", "单关", "篮球"],//1推荐 2二串  3进球数 4半全场 5 单关 6篮球
       list: [],
       loading: false,
       finished: false,
