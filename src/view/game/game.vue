@@ -275,7 +275,7 @@ export default {
 		this.loadMatch();
 	}
   },mounted() {
-    loadMatch();
+    this.loadMatch();
   }
 };
 </script>
