@@ -210,6 +210,7 @@ export default {
             this.dateMap.week = dateArr[3];
             this.dateMap.now = dateArr[1];
             if (res.list && res.list.length > 0) {
+				console.log(res.list);
               this.list = res.list;
               for (let k in this.list) {
                 let m = this.list[k];
@@ -218,7 +219,7 @@ export default {
                 m.aImg = "/static/teamlogo/png/" + hot.visiting_team_id + ".png";
               }
             }
-			console.log(this.list);
+			
           }
         })
         .catch(err => {
@@ -275,6 +276,7 @@ export default {
 		this.loadMatch();
 	}
   },mounted() {
+	  debugger;
     this.loadMatch();
   }
 };
