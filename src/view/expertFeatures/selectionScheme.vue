@@ -285,14 +285,11 @@ export default {
 	loadData(){
 		var that = this;
 		getJson(this.seachMap).then(res => {
-			let json = res.data;
-			that.jsonData = json;
-			that.formatJson();
             if (res.flag) {
               //调用成功
-              //let json = res.args.json;
-			  //that.jsonData = json;
-			 // that.formatJson();
+              let json = res.args.json;
+			  that.jsonData = json.data
+			  that.formatJson();
             }
           }).catch(err => {
             // 加载状态结束
@@ -336,9 +333,9 @@ export default {
 				}
 				m.bookEndTimeLong=parseTime(m.book_end_time).getTime();
 				m.bookEndTimeLong = m.bookEndTimeLong-this.g_config.minute_before_playtime*60*1000;
-				/* if(m.bookEndTimeLong<this.nowTime||(m.index_show==1&&m.show==0)){//截止
+				if(m.bookEndTimeLong<this.nowTime||(m.index_show==1&&m.show==0)){//截止
 					continue;
-				} */
+				}
 				
 				if(m.crs&&m.crs.single==0&&m.ttg&&m.ttg.single==0){
 					continue;

@@ -6,7 +6,7 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : './',
   assetsDir: './static', // 静态资源目录 (js, css, img, fonts)
   // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
-  productionSourceMap: false,
+  productionSourceMap: true,
   css: {
     loaderOptions: {
       postcss: {
@@ -21,11 +21,11 @@ module.exports = {
     }
   },
   //生产环境取消 console.log
-  configureWebpack: config => {
+ /* configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
-      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
     }
-  },
+  }, */
   devServer: {
     port: 8008,
     host: 'localhost',

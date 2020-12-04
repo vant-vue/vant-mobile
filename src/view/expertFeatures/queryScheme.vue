@@ -316,11 +316,11 @@ export default {
 	  //引入外部js
 	  const oScript = document.createElement('script');
 	  oScript.type = 'text/javascript';
-	  oScript.src = '/jczq.js';
+	  oScript.src = '/dist/jczq.js';
 	  document.body.appendChild(oScript);
 	  const oPScript = document.createElement('script');
 	  oPScript.type = 'text/javascript';
-	  oPScript.src = '/optimize.js';
+	  oPScript.src = '/dist/optimize.js';
 	  document.body.appendChild(oPScript);
 	  
 	let mp = this.selectMap;

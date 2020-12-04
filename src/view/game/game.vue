@@ -27,7 +27,7 @@
                             name="arrow-left" @click.stop="pOrN('prev')"/>
                   <span >{{date}}</span>
                   <van-icon class="right"
-                            name="arrow"  @click.stop="pOrN('next')"/>
+                            name="arrow" :class="{'van-col-right-disabled':isMax==1}"  @click.stop="pOrN('next')"/>
                 </van-button>
               </van-col>
               <van-col span="5"
@@ -106,7 +106,7 @@
             </van-row>
             <van-row class="x_row"
                      gutter="20">
-              <van-col span="8"
+              <van-col span="8"	
                        v-for="(v,k) in lNameMap"
                        :key="k">
                 <div :class="{'checked':v==1}"
@@ -142,10 +142,11 @@ export default {
       tabList: ["足球", "篮球"],
       typeMap: ["football", "basketball"],
       show: false,
+	  isMax:1,
       show_overlay: false,
       date: this.formatDate(new Date()),
       minDate: getNextDayDate(-180, new Date()),
-      maxDate: getNextDayDate(1, new Date()),
+      maxDate: new Date(),
       defualtDate: new Date(),
       errorImg: {
         h: "this.src='https://m.lycf888.com/pt/img/logo-h.png'",
@@ -181,12 +182,7 @@ export default {
     },
     formatDate(time) {
       let date = new Date(time);
-      let date_value =
-        date.getFullYear() +
-        "-" +
-        (date.getMonth() + 1) +
-        "-" +
-        date.getDate() +
+      let date_value =stringToDate(date,"yyyy-MM-dd")+
         " " +
         this.week(time);
       //最后显示yyyy-MM-dd hh:mm:ss
@@ -196,10 +192,15 @@ export default {
       this.show = false;
       this.date = this.formatDate(date);
       this.serachMap.date = this.date.split(" ")[0];
+	  if(this.date.indexOf(stringToDate(this.maxDate,"yyyy-MM-dd"))!=-1){
+		  this.isMax = 1;
+	  }else{
+		  this.isMax = 0;
+	  }
       this.loadMatch();
     },
     loadMatch() {
-      let map = this.seachMap;
+      let map = this.serachMap;
       getMatch(map)
         .then(res => {
           if (res.flag) {
@@ -209,14 +210,14 @@ export default {
             this.dateMap.prev = dateArr[0];
             this.dateMap.week = dateArr[3];
             this.dateMap.now = dateArr[1];
+			this.lNameMap = {};
             if (res.list && res.list.length > 0) {
-				console.log(res.list);
               this.list = res.list;
               for (let k in this.list) {
                 let m = this.list[k];
                 this.lNameMap[m.league_name_short] = 1;
-                m.hImg = "/static/teamlogo/png/" + hot.home_team_id + ".png";
-                m.aImg = "/static/teamlogo/png/" + hot.visiting_team_id + ".png";
+                m.hImg = "/static/teamlogo/png/" + m.home_team_id + ".png";
+                m.aImg = "/static/teamlogo/png/" + m.visiting_team_id + ".png";
               }
             }
 			
@@ -233,6 +234,7 @@ export default {
           mp[k] = 1;
         }
       }
+	   this.$forceUpdate();
     },
     selectFan() {
       let mp = this.lNameMap;
@@ -245,14 +247,16 @@ export default {
           }
         }
       }
+	   this.$forceUpdate();
     },
     clickLname(k) {
-      let mp = this.lNameMap;
+      var mp = this.lNameMap;
       if (mp[k] == 1) {
         mp[k] = 0;
       } else {
         mp[k] = 1;
       }
+	  this.$forceUpdate();
     },
     removeLname() {
       this.show_overlay = false;
@@ -271,12 +275,20 @@ export default {
 		if(p=='prev'&&this.date.indexOf(stringToDate(this.minDate,"yyyy-MM-dd"))!=-1){
 			return;
 		}
+		if(!this.dateMap[p]){
+			return;
+		}
 		this.serachMap.date = this.dateMap[p];
 		this.date = this.formatDate(parseDate(this.serachMap.date));
+		if(this.date.indexOf(stringToDate(this.maxDate,"yyyy-MM-dd"))!=-1){
+			this.isMax = 1;
+		}else{
+			this.isMax = 0;
+		}
+		console.log(this.isMax);
 		this.loadMatch();
 	}
   },mounted() {
-	  debugger;
     this.loadMatch();
   }
 };
@@ -390,5 +402,8 @@ export default {
     border: 1px solid #ff0000;
     color: #ff0000;
   }
+}
+.van-col-right-disabled{
+			color: #ccc;
 }
 </style>
