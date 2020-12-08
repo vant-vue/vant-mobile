@@ -164,6 +164,8 @@ export default {
     }
   },
   mounted(){
+	  loadRank();
+	  loadBusinessInfo();
   }
 };
 </script>

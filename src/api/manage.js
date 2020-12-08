@@ -1,10 +1,12 @@
 import { axios } from '@/utils/request'
+import {getHeadersLocalStorage} from '@/utils/cookie'
 
 //post
 export function postAction(url,parameter) {
   return axios({
     url: url,
     method:'post' ,
+	headers:{"localStorage":JSON.stringify(getHeadersLocalStorage())},
     data: parameter
   })
 }
@@ -14,6 +16,7 @@ export function httpAction(url,parameter,method) {
   return axios({
     url: url,
     method:method ,
+	headers:{"localStorage":JSON.stringify(getHeadersLocalStorage())},
     data: parameter
   })
 }
@@ -23,6 +26,7 @@ export function putAction(url,parameter) {
   return axios({
     url: url,
     method:'put',
+	headers:{"localStorage":JSON.stringify(getHeadersLocalStorage())},
     data: parameter
   })
 }
@@ -32,6 +36,7 @@ export function getAction(url,parameter) {
   return axios({
     url: url,
     method: 'get',
+	headers:{"localStorage":JSON.stringify(getHeadersLocalStorage())},
     params: parameter
   })
 }
@@ -41,6 +46,7 @@ export function deleteAction(url,parameter) {
   return axios({
     url: url,
     method: 'delete',
+	headers:{"localStorage":JSON.stringify(getHeadersLocalStorage())},
     params: parameter
   })
 }

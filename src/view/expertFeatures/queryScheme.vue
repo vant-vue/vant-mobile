@@ -321,6 +321,7 @@ export default {
 	  const oPScript = document.createElement('script');
 	  oPScript.type = 'text/javascript';
 	  oPScript.src = '/dist/optimize.js';
+	  
 	  document.body.appendChild(oPScript);
 	  
 	let mp = this.selectMap;

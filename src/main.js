@@ -62,6 +62,23 @@ Vue.use(NavBar)
 //公共组件
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import {getUserId} from '@/utils/cookie'
+
+// 为路由对象 挂载路由导航守卫
+router.beforeEach((to, from, next) => {
+  // to 将要访问的的路径
+  // from 代表从哪个路径跳转
+  // next 是一个函数 表示放行 next() 放行 next('/login') 强制跳转
+  //如果用户访问的登录页面，直接放行
+  if (to.path === '/login') return next();
+  //检查cookie中是否含有登录信息 含有的话 写入到localStorage
+  const localStr = getUserId("localStorage");
+  //没有token 强制跳转到登录页
+  if (!localStr) return next('/login');
+  next();
+})
+
+
 Vue.use(Header);
 Vue.use(Footer);
 

@@ -141,11 +141,23 @@ const betEnMap={
 
 const poolId = { "hhad":56, "had": 51, "crs": 52, "ttg": 53, "hafu": 54,'ht':59, "mnl": 62, "hdc": 61, "wnm": 63, "hilo":64,'lqht':69,"hhgg":69 };
 
+const wxConst = {
+    wx_config: {
+    	appid: "wxbd0fb6137832770c",
+        url: {
+        	 //微信登录 openwx
+            wx_login: "https://open.weixin.qq.com/connect/oauth2/authorize",
+            wx_back_url:"http://lycz.longw.vip/wx/plan/callback/wxQmgdLoginCallback",
+			recdit_url:"/qmgd/index.html#/home"
+        }
+    }
+}
 
 export{
 	CASH_TYPE,
 	paramsMap,
 	betParamMap,
 	betEnMap,
-	poolId
+	poolId,
+	wxConst
 }

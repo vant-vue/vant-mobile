@@ -5,6 +5,7 @@ Vue.use(Router);
 const home = () => import(/* webpackChunkName: "home" */'@/view/home/home')//首页
 const game = () => import(/* webpackChunkName: "game" */'@/view/game/game')//赛事
 const user = () => import(/* webpackChunkName: "user" */'@/view/user/user')//我的
+const login = () => import(/* webpackChunkName: "user" */'@/view/user/login')//登录页
 const recommend = () => import(/* webpackChunkName: "recommend" */'@/view/recommend/recommend')//今日推荐
 const share = () => import(/* webpackChunkName: "share" */'@/view/share/share')//分享
 const search = () => import(/* webpackChunkName: "search" */'@/view/search/search')//搜素
@@ -63,6 +64,15 @@ const routes = [
     component: user,
     meta: {
       title: '我的',
+      isleftarrow: false,
+      isrightarrow: false
+    }
+  },
+  {
+    name: 'login',
+    component: login,
+    meta: {
+      title: '登录',
       isleftarrow: false,
       isrightarrow: false
     }
