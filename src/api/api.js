@@ -7,7 +7,7 @@ import { getAction, postAction, deleteAction, putAction } from '@/api/manage'
 **/
 const rankList = (params) => postAction("/expert/home/rankList", params);//首页排名
 const advList = (params) => postAction("/expert/home/advList", params);//首页广告
-const getHotMatch = (params) => postAction("/expert/home/getHotMatch", params);//首页焦点赛事
+const getHotMatch = (params) => getAction("/expert/home/getHotMatch", params);//首页焦点赛事
 const getMatch = (params) => getAction("/expert/home/getMatch", params);//首页焦点赛事
 
 
@@ -37,7 +37,7 @@ const getQmgdRechargeMoney = (params) => postAction("/expert/user/getQmgdRecharg
 const storeList = (params) => postAction("/expert/user/storeList", params);//获取绑定的店铺
 const switchStore = (params) => postAction("/expert/user/switchStore", params);//切换绑定的店铺
 const uploadFileWx = (params) => postAction("/expert/user/uploadFileWx", params);//上传图片
-const getJson = (params) => getAction("/jsonget", params);//获取竞彩数据
+const getJson = (params) => postAction("/jsonget", params);//获取竞彩数据
 /**
  * 大神推荐接口
  *@date 2020-01-14

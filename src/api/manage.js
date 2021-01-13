@@ -6,7 +6,7 @@ export function postAction(url,parameter) {
   return axios({
     url: url,
     method:'post' ,
-	headers:{"localStorage":JSON.stringify(getHeadersLocalStorage())},
+	headers:{"Content-type":"application/x-www-form-urlencoded","localStorage":JSON.stringify(getHeadersLocalStorage())},
     data: parameter
   })
 }
